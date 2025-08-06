@@ -1,0 +1,50 @@
+# 🔥 다모앙 Go Fiber API - 개발용 Dockerfile
+
+FROM golang:1.21-alpine AS development
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 필요한 패키지 설치
+RUN apk add --no-cache git curl
+
+# 개발용 도구 설치 (Air - 핫 리로드)
+RUN go install github.com/cosmtrek/air@latest
+
+# Go 모듈 파일 복사
+COPY go.mod go.sum ./
+
+# 의존성 다운로드
+RUN go mod download
+
+# 소스 코드 복사
+COPY . .
+
+# Air 설정 파일 생성
+RUN echo 'root = "."' > .air.toml && \
+    echo 'testdata_dir = "testdata"' >> .air.toml && \
+    echo 'tmp_dir = "tmp"' >> .air.toml && \
+    echo '' >> .air.toml && \
+    echo '[build]' >> .air.toml && \
+    echo '  args_bin = []' >> .air.toml && \
+    echo '  bin = "tmp/main"' >> .air.toml && \
+    echo '  cmd = "go build -o ./tmp/main ./cmd/main.go"' >> .air.toml && \
+    echo '  delay = 1000' >> .air.toml && \
+    echo '  exclude_dir = ["assets", "tmp", "vendor", "testdata"]' >> .air.toml && \
+    echo '  exclude_file = []' >> .air.toml && \
+    echo '  exclude_regex = ["_test.go"]' >> .air.toml && \
+    echo '  exclude_unchanged = false' >> .air.toml && \
+    echo '  follow_symlink = false' >> .air.toml && \
+    echo '  full_bin = ""' >> .air.toml && \
+    echo '  include_dir = []' >> .air.toml && \
+    echo '  include_ext = ["go", "tpl", "tmpl", "html"]' >> .air.toml && \
+    echo '  kill_delay = "0s"' >> .air.toml && \
+    echo '  log = "build-errors.log"' >> .air.toml && \
+    echo '  send_interrupt = false' >> .air.toml && \
+    echo '  stop_on_root = false' >> .air.toml
+
+# 포트 노출
+EXPOSE 8001
+
+# 개발 모드 실행 (핫 리로드)
+CMD ["air", "-c", ".air.toml"]

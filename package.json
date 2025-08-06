@@ -1,0 +1,78 @@
+{
+  "name": "damoang-platform",
+  "version": "0.1.0",
+  "description": "🏠 다모앙 - 미니홈페이지와 소셜 커머스가 결합된 차세대 커뮤니티 플랫폼",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:services\"",
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:services": "make dev-services",
+    "build": "npm run build:packages && npm run build:apps",
+    "build:packages": "npm run build --workspaces --if-present",
+    "build:apps": "cd apps/web && npm run build",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write \"**/*.{js,ts,svelte,json,md}\"",
+    "type-check": "npm run type-check --workspaces --if-present",
+    "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules && npm install",
+    "setup": "npm install && npm run build:packages",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "db:migrate": "make db-migrate",
+    "db:seed": "make db-seed",
+    "release": "changeset publish",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-svelte": "^2.35.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-svelte": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/damoang/damoang-platform.git"
+  },
+  "keywords": [
+    "community",
+    "social-network",
+    "homepage-builder",
+    "e-commerce",
+    "svelte",
+    "golang",
+    "microservices",
+    "open-source"
+  ],
+  "author": "Damoang Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/damoang/damoang-platform/issues"
+  },
+  "homepage": "https://github.com/damoang/damoang-platform#readme",
+  "lint-staged": {
+    "*.{js,ts,svelte}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+} 

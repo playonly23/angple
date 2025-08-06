@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # 🗄️ MySQL 데이터베이스
+  mysql:
+    image: mysql:8.0
+    container_name: damoang-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: damoang_root_2024
+      MYSQL_DATABASE: damoang_db
+      MYSQL_USER: damoang_user
+      MYSQL_PASSWORD: damoang_pass_2024
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./infrastructure/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - damoang-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # 🚀 백엔드 API 서버 (개발용)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: damoang-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: damoang_db
+      DB_USER: damoang_user
+      DB_PASSWORD: damoang_pass_2024
+      JWT_SECRET: damoang_jwt_secret_2024_super_secure
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - damoang-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # 🌐 프론트엔드 웹앱 (개발용)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: damoang-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:8001
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - damoang-network
+    depends_on:
+      - backend
+
+  # 📊 phpMyAdmin (데이터베이스 관리)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: damoang-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: damoang_user
+      PMA_PASSWORD: damoang_pass_2024
+      MYSQL_ROOT_PASSWORD: damoang_root_2024
+    ports:
+      - "8080:80"
+    networks:
+      - damoang-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # 📮 MailHog (이메일 테스트)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: damoang-mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - damoang-network
+
+networks:
+  damoang-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
