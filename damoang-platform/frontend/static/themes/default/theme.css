@@ -1,0 +1,351 @@
+/* 🏠 다모앙 기본 테마 v1.0.0 */
+
+:root {
+  /* 🎨 컬러 팔레트 */
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary-color: #64748b;
+  --accent-color: #f59e0b;
+  
+  /* 배경색 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  
+  /* 텍스트 색상 */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* 테두리 */
+  --border-color: #e2e8f0;
+  --border-radius: 0.5rem;
+  
+  /* 그림자 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* 타이포그래피 */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+}
+
+/* 🌐 전역 스타일 */
+.theme-default {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* 📱 헤더 스타일 */
+.theme-default .header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 0;
+}
+
+.theme-default .header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-default .logo {
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.theme-default .nav-menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theme-default .nav-menu a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.theme-default .nav-menu a:hover {
+  color: var(--primary-color);
+}
+
+/* 🏠 메인 컨테이너 */
+.theme-default .main-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+/* 📋 게시판 스타일 */
+.theme-default .board-container {
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.theme-default .board-header {
+  background: var(--bg-tertiary);
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-default .board-title {
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.theme-default .board-description {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.theme-default .board-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-default .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-default .btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.theme-default .btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.theme-default .btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.theme-default .btn-secondary:hover {
+  background: var(--border-color);
+}
+
+/* 📝 게시글 목록 */
+.theme-default .post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theme-default .post-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s;
+}
+
+.theme-default .post-item:hover {
+  background: var(--bg-secondary);
+}
+
+.theme-default .post-item:last-child {
+  border-bottom: none;
+}
+
+.theme-default .post-number {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  width: 3rem;
+  text-align: center;
+}
+
+.theme-default .post-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-default .post-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-default .post-title:hover {
+  color: var(--primary-color);
+}
+
+.theme-default .post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.theme-default .post-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* 📊 사이드바 */
+.theme-default .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.theme-default .widget {
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.theme-default .widget-header {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-default .widget-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.theme-default .widget-content {
+  padding: 1rem;
+}
+
+/* 🔍 검색 폼 */
+.theme-default .search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.theme-default .search-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+}
+
+.theme-default .search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+}
+
+/* 📱 반응형 디자인 */
+@media (max-width: 768px) {
+  .theme-default .main-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .theme-default .header-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .theme-default .nav-menu {
+    gap: 1rem;
+  }
+  
+  .theme-default .board-actions {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .theme-default .post-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .theme-default .post-stats {
+    align-self: flex-end;
+  }
+}
+
+/* 🌟 애니메이션 */
+.theme-default .fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🎯 공지사항 스타일 */
+.theme-default .post-item.notice {
+  background: #fef3c7;
+  border-left: 4px solid var(--accent-color);
+}
+
+.theme-default .post-item.notice .post-title {
+  color: #92400e;
+  font-weight: bold;
+}
+
+/* 💬 댓글 수 배지 */
+.theme-default .comment-badge {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.125rem 0.5rem;
+  border-radius: 1rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
