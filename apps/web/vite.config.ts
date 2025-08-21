@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
+	server: {
+		allowedHosts: ['web.damoang.net', 'localhost']
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
