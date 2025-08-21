@@ -1,5 +1,5 @@
 # Admin SvelteKit Application Dockerfile
-FROM node:20-alpine AS development
+FROM node:24-alpine AS development
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ EXPOSE 5173
 CMD ["pnpm", "dev", "--host", "0.0.0.0", "--port", "5173"]
 
 # Production build stage
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:24-alpine AS production
 
 WORKDIR /app
 
