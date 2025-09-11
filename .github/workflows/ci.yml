@@ -9,7 +9,6 @@ on:
 env:
   GO_VERSION: '1.21'
   NODE_VERSION: '18'
-  KOMODO_API_URL: https://komodo.damoang.net
 
 jobs:
   # 코드 품질 검사
@@ -34,7 +33,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: 🎨 Check formatting
-        run: npx prettier --check "**/*.{js,ts,svelte,json,md}"
+        run: npx prettier --check '**/*.{js,ts,svelte,json,md}'
 
       - name: 🔍 Lint TypeScript
         run: npm run lint
@@ -263,8 +262,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  # SSM 배포
-  deploy-ssm:
+  # EC2 배포
+  deploy:
     name: 🚀 Deploy via SSM
     runs-on: ubuntu-latest
     needs: [docker-build]
