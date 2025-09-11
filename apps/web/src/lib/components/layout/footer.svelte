@@ -2,7 +2,6 @@
     // 현재 연도 자동 계산
     const currentYear = new Date().getFullYear();
 
-
     // 앙포털 메뉴
     const angportalLinks = [
         { name: '다모앙 지도 - 앙지도', href: 'https://damoang.net/angmap' },
@@ -38,8 +37,6 @@
         { name: '바이럴 신고 기록 (광고 앙대앙)', href: 'https://damoang.net/nope' },
         { name: '회원 이용제한 기록', href: 'https://damoang.net/disciplinelog' }
     ];
-
-
 </script>
 
 <footer class="mt-16 border-t border-gray-200 bg-gray-100 text-gray-800">
@@ -134,7 +131,11 @@
 
             <!-- 유튜브 아이콘 -->
             <div class="mt-4 flex justify-center">
-                <a href="http://youtube.com/@AngPangPang" class="inline-block" aria-label="유튜브 채널">
+                <a
+                    href="http://youtube.com/@AngPangPang"
+                    class="inline-block"
+                    aria-label="유튜브 채널"
+                >
                     <svg
                         class="h-8 w-8 text-red-600 transition-colors hover:text-red-700"
                         fill="currentColor"

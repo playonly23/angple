@@ -8,7 +8,7 @@
 - **SvelteKit 2.22** - 풀스택 웹 프레임워크
 - **TypeScript 5.0** - 타입 안전성을 위한 정적 타입 검사
 - **Tailwind CSS 4.0** - 유틸리티 퍼스트 CSS 프레임워크
-- **Vite 7.0** -  개발 서버 및 빌드 도구
+- **Vite 7.0** - 개발 서버 및 빌드 도구
 - **pnpm** - 패키지 관리
 
 ## 시작하기
@@ -84,21 +84,21 @@ pnpm dlx shadcn-svelte@latest add dialog
 
 ```svelte
 <script lang="ts">
-  import { Button } from '$lib/components/ui/button';
-  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-  import User from '@lucide/svelte/icons/user';
+    import { Button } from '$lib/components/ui/button';
+    import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+    import User from '@lucide/svelte/icons/user';
 </script>
 
 <Card class="w-full max-w-md">
-  <CardHeader>
-    <CardTitle>카드 제목</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <Button class="w-full">
-      <User class="w-4 h-4 mr-2" />
-      버튼
-    </Button>
-  </CardContent>
+    <CardHeader>
+        <CardTitle>카드 제목</CardTitle>
+    </CardHeader>
+    <CardContent>
+        <Button class="w-full">
+            <User class="mr-2 h-4 w-4" />
+            버튼
+        </Button>
+    </CardContent>
 </Card>
 ```
 
@@ -127,13 +127,13 @@ Svelte 5의 새로운 이벤트 핸들러 문법을 사용합니다:
 
 ```svelte
 <script lang="ts">
-  // Svelte 5 Rune 모드
-  let count = $state(0);
-  let doubled = $derived(count * 2);
-  
-  $effect(() => {
-    console.log('카운트 변경:', count);
-  });
+    // Svelte 5 Rune 모드
+    let count = $state(0);
+    let doubled = $derived(count * 2);
+
+    $effect(() => {
+        console.log('카운트 변경:', count);
+    });
 </script>
 ```
 
@@ -144,6 +144,7 @@ Svelte 5의 새로운 이벤트 핸들러 문법을 사용합니다:
 - **브라우저 테스트**: @vitest/browser
 
 테스트 파일 규칙:
+
 - 단위 테스트: `*.test.ts`, `*.spec.ts`
 - E2E 테스트: `*.e2e.ts`
 
