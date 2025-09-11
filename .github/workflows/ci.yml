@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [auth, user, post, feed, media]
+        service: [auth]
     
     services:
       postgres:
@@ -211,7 +211,7 @@ jobs:
 
       - name: 🏗️ Build backend services
         run: |
-          for service in auth user post feed media; do
+          for service in auth; do
             cd services/$service
             go build -o bin/$service cmd/main.go
             cd ../..
@@ -257,7 +257,7 @@ jobs:
           context: .
           file: apps/${{ matrix.component }}/Dockerfile
           push: true
-          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-${{ matrix.component }}:latest,${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-${{ matrix.component }}:${{ github.sha }}
+          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ matrix.component }}-latest,${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ matrix.component }}-${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -294,8 +294,8 @@ jobs:
       run: |
         echo "Triggering Komodo deployment..."
         
-        WEB_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-web:$IMAGE_TAG"
-        ADMIN_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-admin:$IMAGE_TAG"
+        WEB_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:web-$IMAGE_TAG"
+        ADMIN_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:admin-$IMAGE_TAG"
         
         # Komodo API 호출 (실제 Komodo 설정 후 활성화)
         # curl -X POST "$KOMODO_API_URL/api/deployment/deploy" \
@@ -327,8 +327,8 @@ jobs:
         echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
         echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Web Image**: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-web:$IMAGE_TAG" >> $GITHUB_STEP_SUMMARY
-        echo "- **Admin Image**: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-admin:$IMAGE_TAG" >> $GITHUB_STEP_SUMMARY
+        echo "- **Web Image**: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:web-$IMAGE_TAG" >> $GITHUB_STEP_SUMMARY
+        echo "- **Admin Image**: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:admin-$IMAGE_TAG" >> $GITHUB_STEP_SUMMARY
         echo "- **ECR Registry**: ${{ secrets.ECR_REGISTRY }}" >> $GITHUB_STEP_SUMMARY
 
   # 보안 스캔
