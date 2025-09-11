@@ -67,8 +67,13 @@
   },
   "homepage": "https://github.com/damoang/damoang-platform#readme",
   "lint-staged": {
-    "*.{js,ts,svelte}": ["eslint --fix", "prettier --write"],
-    "*.{json,md}": ["prettier --write"]
+    "*.{js,ts,svelte}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {
@@ -76,4 +81,4 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
-} 
+}

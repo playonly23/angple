@@ -21,8 +21,8 @@
             <form class="p-6 md:p-8">
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-col items-center text-center">
-                        <h1 class="text-2xl font-bold">Damoang </h1>
-                        <p class="text-balance text-muted-foreground">Login to account</p>
+                        <h1 class="text-2xl font-bold">Damoang</h1>
+                        <p class="text-muted-foreground text-balance">Login to account</p>
                     </div>
                     <div class="grid gap-3">
                         <Label for="email-{id}">Email</Label>
@@ -37,16 +37,18 @@
                     <Button type="submit" class="w-full">Login</Button>
                 </div>
             </form>
-            <div class="relative hidden items-center justify-center bg-muted md:flex">
+            <div class="bg-muted relative hidden items-center justify-center md:flex">
                 <img
                     src="https://cdn.damoang.net/data/editor/64abd-66bd1f5106437-1c11615bec24fe4cc58fee1f83353fb0a939fa9c.svg"
                     alt="다모앙"
-                    class="w-full  object-cover dark:brightness-[0.2] dark:grayscale"
+                    class="w-full object-cover dark:brightness-[0.2] dark:grayscale"
                 />
             </div>
         </Card.Content>
     </Card.Root>
-    <div class="text-center text-xs text-balance text-muted-foreground *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary">
-       © SDK Co., Ltd. All rights reserved.
+    <div
+        class="text-muted-foreground *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary text-balance text-center text-xs"
+    >
+        © SDK Co., Ltd. All rights reserved.
     </div>
 </div>

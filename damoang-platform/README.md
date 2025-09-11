@@ -18,7 +18,7 @@ cd backend
 npm install
 npm start
 
-# 3. 프론트엔드 시작 (터미널 2) 
+# 3. 프론트엔드 시작 (터미널 2)
 cd frontend
 npm install
 npm run dev
@@ -33,7 +33,7 @@ npm run dev
 **다모앙**은 **싸이월드의 향수**와 **현대적인 소셜 미디어**를 결합한 혁신적인 플랫폼입니다.
 
 - 📱 **유튜브 숏츠** 스타일의 세로 스크롤 피드
-- 🏠 **미니 홈페이지** 빌더로 개인 공간 꾸미기  
+- 🏠 **미니 홈페이지** 빌더로 개인 공간 꾸미기
 - 🛍️ **소셜 커머스**로 피드에서 바로 쇼핑
 - 🔌 **플러그인 시스템**으로 무한 확장
 - 🌍 **오픈소스**로 커뮤니티와 함께 성장
@@ -56,7 +56,8 @@ damoang-platform/
 ## 🛠️ 개발 환경
 
 ### 필수 요구사항
-- **Node.js** 18+ 
+
+- **Node.js** 18+
 - **npm** 또는 **yarn**
 - **Git**
 
@@ -67,7 +68,7 @@ damoang-platform/
 cd backend
 npm run dev     # http://localhost:8001
 
-# 프론트엔드 개발 서버  
+# 프론트엔드 개발 서버
 cd frontend
 npm run dev     # http://localhost:5173
 ```
@@ -86,15 +87,16 @@ npm run dev     # http://localhost:5173
 
 ## 🔗 API 엔드포인트
 
-| 메서드 | 경로 | 설명 |
-|--------|------|------|
-| `GET` | `/health` | 서버 상태 확인 |
-| `GET` | `/api` | API 정보 |
-| `GET` | `/api/status` | 시스템 상태 |
-| `POST` | `/api/auth/login` | 로그인 (개발용) |
-| `GET` | `/api/posts` | 게시글 목록 (더미 데이터) |
+| 메서드 | 경로              | 설명                      |
+| ------ | ----------------- | ------------------------- |
+| `GET`  | `/health`         | 서버 상태 확인            |
+| `GET`  | `/api`            | API 정보                  |
+| `GET`  | `/api/status`     | 시스템 상태               |
+| `POST` | `/api/auth/login` | 로그인 (개발용)           |
+| `GET`  | `/api/posts`      | 게시글 목록 (더미 데이터) |
 
 ### 개발용 로그인 정보
+
 - **이메일**: `admin@damoang.dev`
 - **비밀번호**: `damoang123`
 

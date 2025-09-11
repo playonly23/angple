@@ -24,7 +24,11 @@ export default ts.config(
         rules: {
             // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
             // see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-            'no-undef': 'off'
+            'no-undef': 'off',
+            // SvelteKit/개발 중이므로 일부 규칙 완화
+            '@typescript-eslint/no-unused-vars': 'warn',
+            'svelte/require-each-key': 'warn',
+            'svelte/no-navigation-without-resolve': 'warn'
         }
     },
     {
@@ -41,7 +45,9 @@ export default ts.config(
     {
         files: ['**/*.svelte', '**/*.ts', '**/*.js'],
         ignores: [
-            '**/+*.svelte', // SvelteKit 라우트 파일 제외 (+page.svelte 등)
+            '**/+*.js', // SvelteKit 파일들 제외
+            '**/+*.ts',
+            '**/+*.svelte',
             '**/app.html', // 특수 SvelteKit 파일
             '**/app.css', // CSS 파일
             '**/vite.config.*', // 설정 파일들

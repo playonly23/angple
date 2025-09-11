@@ -22,7 +22,7 @@
 
 ### 필수 요구사항
 
-- **Node.js** 18+ 
+- **Node.js** 18+
 - **Go** 1.21+
 - **Docker** & **Docker Compose**
 - **Git**
@@ -80,12 +80,14 @@ damoang-platform/
 ### 🔧 기술 스택
 
 **Frontend**
+
 - 🎨 **SvelteKit** - 현대적인 풀스택 프레임워크
 - 📱 **TypeScript** - 타입 안전성
 - 🎭 **Tailwind CSS** - 유틸리티 우선 CSS
 - 📦 **Vite** - 초고속 빌드 도구
 
 **Backend**
+
 - ⚡ **Go + Fiber** - 고성능 웹 프레임워크
 - 🏗️ **Clean Architecture** - 확장 가능한 구조
 - 🔐 **Keycloak** - 엔터프라이즈급 인증
@@ -93,6 +95,7 @@ damoang-platform/
 - ⚡ **Redis** - 고속 캐싱 & 세션
 
 **Infrastructure**
+
 - 🐳 **Docker** - 컨테이너화
 - ☁️ **Kubernetes** - 오케스트레이션
 - 📊 **Prometheus + Grafana** - 모니터링
@@ -102,24 +105,28 @@ damoang-platform/
 ## 🎯 핵심 기능
 
 ### 📱 소셜 피드 시스템
+
 - **세로 스크롤** 숏폼 인터페이스
 - **AI 기반** 개인화 추천
 - **실시간** 좋아요/댓글/공유
 - **무한 스크롤** & 미리 로딩
 
 ### 🏠 미니 홈페이지 빌더
+
 - **드래그 앤 드롭** 에디터
 - **다양한 테마** 및 위젯
 - **방명록** & 방문자 통계
 - **커스텀 도메인** 지원
 
 ### 🛍️ 소셜 커머스
+
 - **피드 연동** 쇼핑
 - **즉시 구매** 기능
 - **판매자 도구** 제공
 - **결제 시스템** 통합
 
 ### 🎨 컨텐츠 마켓플레이스
+
 - **디지털 에셋** 거래
 - **라이센스 관리** 시스템
 - **크리에이터** 수익화 도구
@@ -163,6 +170,7 @@ make format
 ## 📋 로드맵
 
 ### 🎯 2024 Q1-Q2: MVP Core
+
 - [x] 기본 인증 시스템
 - [x] 사용자 관리
 - [ ] 피드 시스템
@@ -170,12 +178,14 @@ make format
 - [ ] 기본 상거래
 
 ### 🚀 2024 Q3: Social Features
+
 - [ ] 팔로우/친구 시스템
 - [ ] 실시간 알림
 - [ ] 고급 검색
 - [ ] 모바일 앱
 
 ### 🌟 2024 Q4: Advanced Features
+
 - [ ] AI 추천 시스템
 - [ ] 컨텐츠 마켓플레이스
 - [ ] 고급 분석
@@ -187,8 +197,8 @@ make format
 
 - **⭐ Stars**: 아직 시작 단계!
 - **🍴 Forks**: 첫 기여자를 찾고 있어요
-- **🐛 Issues**: 
-- **👥 Contributors**: 
+- **🐛 Issues**:
+- **👥 Contributors**:
 - **📈 활성도**: 🔥 매일 커밋 중
 
 ## 🏃‍♂️ 성능
@@ -258,4 +268,4 @@ make dev
   **Made with ❤️ by the Damoang Team**
   
   [Website](https://damoang.dev) • [Docs](https://docs.damoang.dev) • [Community](https://community.damoang.dev)
-</div> 
+</div>

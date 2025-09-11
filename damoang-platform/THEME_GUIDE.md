@@ -3,6 +3,7 @@
 > **다모앙 플랫폼을 위한 완전한 테마 개발 가이드**
 
 ## 📋 목차
+
 - [소개](#소개)
 - [테마 구조](#테마-구조)
 - [개발 환경 설정](#개발-환경-설정)
@@ -19,6 +20,7 @@
 다모앙은 **그누보드**와 **워드프레스** 스타일의 테마 시스템을 제공합니다. 개발자들이 쉽게 새로운 테마를 만들고 배포할 수 있도록 설계되었습니다.
 
 ### ✨ 테마 시스템의 장점
+
 - 🔄 **실시간 테마 전환** - 페이지 새로고침 없이 즉시 변경
 - 🎨 **완전한 커스터마이징** - CSS부터 컴포넌트까지 모든 것을 수정 가능
 - 📱 **반응형 기본 지원** - 모바일 우선 설계
@@ -122,12 +124,12 @@ echo "VITE_THEME_HOT_RELOAD=true" >> .env.local
   --primary-color: #3b82f6;
   --primary-hover: #2563eb;
   --secondary-color: #64748b;
-  
+
   /* 배경색 */
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
-  
+
   /* 텍스트 색상 */
   --text-primary: #1e293b;
   --text-secondary: #64748b;
@@ -139,13 +141,18 @@ echo "VITE_THEME_HOT_RELOAD=true" >> .env.local
 
 ```css
 /* ✅ 좋은 예 - 네임스페이스 사용 */
-.theme-default .board-container { }
-.theme-default .post-item { }
-.theme-default .sidebar { }
+.theme-default .board-container {
+}
+.theme-default .post-item {
+}
+.theme-default .sidebar {
+}
 
 /* ❌ 나쁜 예 - 글로벌 클래스 */
-.container { }
-.item { }
+.container {
+}
+.item {
+}
 ```
 
 ---
@@ -187,12 +194,12 @@ touch frontend/static/themes/mytheme/theme.css
   --primary-color: #8b5cf6;
   --primary-hover: #7c3aed;
   --accent-color: #f59e0b;
-  
+
   /* 배경 - 다크모드 스타일 */
   --bg-primary: #1f2937;
   --bg-secondary: #111827;
   --bg-tertiary: #374151;
-  
+
   /* 텍스트 */
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
@@ -201,7 +208,7 @@ touch frontend/static/themes/mytheme/theme.css
 
 /* 테마 기본 스타일 */
 .theme-mytheme {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
@@ -222,13 +229,13 @@ touch frontend/static/themes/mytheme/theme.css
 export const availableThemes = writable([
   // ... 기존 테마들
   {
-    id: 'mytheme',
-    name: '나만의 테마',
-    description: '개성 넘치는 나만의 테마',
-    author: 'Your Name',
-    version: '1.0.0',
-    preview: '/themes/mytheme/preview.jpg'
-  }
+    id: "mytheme",
+    name: "나만의 테마",
+    description: "개성 넘치는 나만의 테마",
+    author: "Your Name",
+    version: "1.0.0",
+    preview: "/themes/mytheme/preview.jpg",
+  },
 ]);
 ```
 
@@ -245,12 +252,12 @@ export const availableThemes = writable([
   export let boardName = 'free';
   export let boardTitle = '게시판';
   export let boardDescription = '';
-  
+
   // 테마별 추가 기능
   let viewMode = 'list'; // 'list' | 'grid' | 'card'
-  
+
   function toggleViewMode() {
-    viewMode = viewMode === 'list' ? 'grid' : 
+    viewMode = viewMode === 'list' ? 'grid' :
                viewMode === 'grid' ? 'card' : 'list';
   }
 </script>
@@ -262,7 +269,7 @@ export const availableThemes = writable([
       {viewMode === 'list' ? '📋' : viewMode === 'grid' ? '⌗' : '🗃️'}
     </button>
   </div>
-  
+
   <!-- 기본 게시판 기능 + 커스텀 스타일 -->
   <div class="board-content {viewMode}">
     <!-- 게시글 목록 ... -->
@@ -283,11 +290,15 @@ export const availableThemes = writable([
 export async function loadThemeComponent(themeName, componentName) {
   try {
     // 테마별 컴포넌트가 있는지 확인
-    const themeComponent = await import(`../themes/${themeName}/components/${componentName}.svelte`);
+    const themeComponent = await import(
+      `../themes/${themeName}/components/${componentName}.svelte`
+    );
     return themeComponent.default;
   } catch {
     // 없으면 기본 컴포넌트 사용
-    const defaultComponent = await import(`../themes/default/components/${componentName}.svelte`);
+    const defaultComponent = await import(
+      `../themes/default/components/${componentName}.svelte`
+    );
     return defaultComponent.default;
   }
 }
@@ -303,14 +314,14 @@ export async function loadThemeComponent(themeName, componentName) {
 /* 📝 색상 명명 규칙 */
 
 /* 기능별 색상 */
---color-primary: #3b82f6;      /* 주요 액션 */
---color-secondary: #64748b;    /* 보조 액션 */
---color-success: #10b981;      /* 성공 메시지 */
---color-warning: #f59e0b;      /* 경고 메시지 */
---color-error: #ef4444;        /* 오류 메시지 */
+--color-primary: #3b82f6; /* 주요 액션 */
+--color-secondary: #64748b; /* 보조 액션 */
+--color-success: #10b981; /* 성공 메시지 */
+--color-warning: #f59e0b; /* 경고 메시지 */
+--color-error: #ef4444; /* 오류 메시지 */
 
 /* 의미별 색상 */
---color-bg-primary: #ffffff;   /* 주 배경 */
+--color-bg-primary: #ffffff; /* 주 배경 */
 --color-bg-secondary: #f8fafc; /* 보조 배경 */
 --color-text-primary: #1e293b; /* 주 텍스트 */
 --color-text-secondary: #64748b; /* 보조 텍스트 */
@@ -320,13 +331,13 @@ export async function loadThemeComponent(themeName, componentName) {
 
 ```css
 /* 📖 텍스트 스케일 */
---font-size-xs: 0.75rem;    /* 12px */
---font-size-sm: 0.875rem;   /* 14px */
---font-size-base: 1rem;     /* 16px */
---font-size-lg: 1.125rem;   /* 18px */
---font-size-xl: 1.25rem;    /* 20px */
---font-size-2xl: 1.5rem;    /* 24px */
---font-size-3xl: 1.875rem;  /* 30px */
+--font-size-xs: 0.75rem; /* 12px */
+--font-size-sm: 0.875rem; /* 14px */
+--font-size-base: 1rem; /* 16px */
+--font-size-lg: 1.125rem; /* 18px */
+--font-size-xl: 1.25rem; /* 20px */
+--font-size-2xl: 1.5rem; /* 24px */
+--font-size-3xl: 1.875rem; /* 30px */
 
 /* 📏 라인 높이 */
 --line-height-tight: 1.25;
@@ -338,14 +349,14 @@ export async function loadThemeComponent(themeName, componentName) {
 
 ```css
 /* 📐 스페이싱 */
---spacing-1: 0.25rem;  /* 4px */
---spacing-2: 0.5rem;   /* 8px */
---spacing-3: 0.75rem;  /* 12px */
---spacing-4: 1rem;     /* 16px */
---spacing-6: 1.5rem;   /* 24px */
---spacing-8: 2rem;     /* 32px */
---spacing-12: 3rem;    /* 48px */
---spacing-16: 4rem;    /* 64px */
+--spacing-1: 0.25rem; /* 4px */
+--spacing-2: 0.5rem; /* 8px */
+--spacing-3: 0.75rem; /* 12px */
+--spacing-4: 1rem; /* 16px */
+--spacing-6: 1.5rem; /* 24px */
+--spacing-8: 2rem; /* 32px */
+--spacing-12: 3rem; /* 48px */
+--spacing-16: 4rem; /* 64px */
 ```
 
 ---
@@ -396,7 +407,7 @@ export async function loadThemeComponent(themeName, componentName) {
 
 ```javascript
 // 테마에서 플러그인 훅 사용
-import { pluginHooks } from '$lib/plugins/hookSystem.js';
+import { pluginHooks } from "$lib/plugins/hookSystem.js";
 
 // 게시글 렌더링 전 훅
 pluginHooks.beforePostRender.subscribe((postData) => {
@@ -443,14 +454,24 @@ pluginHooks.afterPostRender.subscribe((element) => {
 }
 
 /* 효율적인 선택자 사용 */
-.theme-mytheme .post-item { /* ✅ 좋음 */ }
-.theme-mytheme div.post-item { /* ❌ 비효율적 */ }
+.theme-mytheme .post-item {
+  /* ✅ 좋음 */
+}
+.theme-mytheme div.post-item {
+  /* ❌ 비효율적 */
+}
 
 /* 미디어 쿼리 그룹화 */
 @media (max-width: 768px) {
-  .theme-mytheme .header { /* ... */ }
-  .theme-mytheme .sidebar { /* ... */ }
-  .theme-mytheme .footer { /* ... */ }
+  .theme-mytheme .header {
+    /* ... */
+  }
+  .theme-mytheme .sidebar {
+    /* ... */
+  }
+  .theme-mytheme .footer {
+    /* ... */
+  }
 }
 ```
 
@@ -459,11 +480,10 @@ pluginHooks.afterPostRender.subscribe((element) => {
 ```css
 /* 🖼️ 이미지 최적화 */
 .theme-mytheme .hero-image {
-  background-image: 
-    image-set(
-      "/themes/mytheme/hero.webp" type("image/webp"),
-      "/themes/mytheme/hero.jpg" type("image/jpeg")
-    );
+  background-image: image-set(
+    "/themes/mytheme/hero.webp" type("image/webp"),
+    "/themes/mytheme/hero.jpg" type("image/jpeg")
+  );
 }
 
 /* 📱 고해상도 대응 */
@@ -483,26 +503,26 @@ pluginHooks.afterPostRender.subscribe((element) => {
 
 ```javascript
 // tests/theme.test.js
-import { render } from '@testing-library/svelte';
-import { switchTheme } from '$lib/theme/themeStore.js';
-import BoardList from '$themes/mytheme/components/BoardList.svelte';
+import { render } from "@testing-library/svelte";
+import { switchTheme } from "$lib/theme/themeStore.js";
+import BoardList from "$themes/mytheme/components/BoardList.svelte";
 
-describe('MyTheme Components', () => {
+describe("MyTheme Components", () => {
   beforeEach(async () => {
-    await switchTheme('mytheme');
+    await switchTheme("mytheme");
   });
 
-  test('BoardList renders correctly', () => {
+  test("BoardList renders correctly", () => {
     const { getByText } = render(BoardList, {
-      boardTitle: '테스트 게시판'
+      boardTitle: "테스트 게시판",
     });
-    
-    expect(getByText('테스트 게시판')).toBeInTheDocument();
+
+    expect(getByText("테스트 게시판")).toBeInTheDocument();
   });
 
-  test('Theme styles are applied', () => {
-    const element = document.querySelector('.theme-mytheme');
-    expect(element).toHaveClass('theme-mytheme');
+  test("Theme styles are applied", () => {
+    const element = document.querySelector(".theme-mytheme");
+    expect(element).toHaveClass("theme-mytheme");
   });
 });
 ```
