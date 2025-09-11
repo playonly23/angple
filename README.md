@@ -185,11 +185,11 @@ make format
 
 ### 원본 저장소 권한
 
-민감한 작업들은 **원본 저장소**(`damoang/damoang-platform`)에서만 실행됩니다:
+민감한 작업들은 **원본 저장소**(`damoang/angple`)에서만 실행됩니다:
 
 ```yaml
 # .github/workflows/ci.yml
-if: github.repository == 'damoang/damoang-platform'
+if: github.repository == 'damoang/angple'
 ```
 
 이를 통해 다음이 보장됩니다:
