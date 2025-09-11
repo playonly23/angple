@@ -65,8 +65,8 @@ jobs:
       run: |
         echo "Triggering Komodo deployment..."
         
-        WEB_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-web:${{ github.sha }}"
-        ADMIN_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}-admin:${{ github.sha }}"
+        WEB_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
+        ADMIN_IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
         
         # Komodo API 호출 (실제 Komodo 설정 후 활성화)
         # curl -X POST "https://komodo.damoang.net/api/deployment/deploy" \
