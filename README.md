@@ -167,6 +167,36 @@ make format
 - 💬 [디스커션](https://github.com/damoang/damoang-platform/discussions) 참여
 - 📝 [코드 스타일 가이드](docs/guides/code-style.md) 준수
 
+## 🔄 CI/CD & 포크 정책
+
+### 포크된 저장소에서의 동작
+
+이 프로젝트를 포크하면 **자동으로 안전한 CI 파이프라인**이 작동합니다:
+
+✅ **실행되는 단계**:
+- 🔍 **린트 검사** - 코드 품질 확인
+- 🧪 **단위 테스트** - 프론트엔드/백엔드 테스트
+- 🏗️ **빌드 테스트** - 컴파일 및 빌드 검증
+
+❌ **실행되지 않는 단계** (보안상 제한):
+- 🐳 **Docker 빌드** - AWS ECR 푸시 없음
+- 🚀 **배포** - EC2 인스턴스 접근 없음
+- 🔄 **통합 테스트** - 외부 서비스 의존성
+
+### 원본 저장소 권한
+
+민감한 작업들은 **원본 저장소**(`damoang/damoang-platform`)에서만 실행됩니다:
+
+```yaml
+# .github/workflows/ci.yml
+if: github.repository == 'damoang/damoang-platform'
+```
+
+이를 통해 다음이 보장됩니다:
+- 🔒 **보안**: AWS 자격증명 보호
+- 💰 **비용**: 불필요한 클라우드 리소스 사용 방지  
+- ⚡ **속도**: 포크에서 빠른 피드백 제공
+
 ## 📋 로드맵
 
 ### 🎯 2024 Q1-Q2: MVP Core
