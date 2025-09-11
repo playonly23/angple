@@ -24,7 +24,7 @@ RUN npm install -g pnpm
 COPY . .
 WORKDIR /app/apps/admin
 RUN pnpm install --frozen-lockfile
-RUN pnpm add @sveltejs/adapter-static
+RUN pnpm add -D @sveltejs/adapter-static
 RUN pnpm build
 
 # Production stage with nginx
