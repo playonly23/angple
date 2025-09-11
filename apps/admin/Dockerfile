@@ -23,17 +23,16 @@ RUN npm install -g pnpm
 
 COPY apps/admin/package.json apps/admin/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
+RUN pnpm add @sveltejs/adapter-static
 
 COPY . .
 RUN pnpm build
 
-# Production stage
-FROM node:24-alpine AS production
-
-WORKDIR /app
+# Production stage with nginx
+FROM nginx:alpine AS production
 
 # 빌드된 파일을 nginx로 복사
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/apps/admin/build /usr/share/nginx/html
 
 # nginx 설정 (SPA용)
 RUN echo 'server { \
