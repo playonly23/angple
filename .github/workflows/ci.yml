@@ -240,6 +240,9 @@ jobs:
 
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
 
       - name: ⚙️ Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
@@ -261,6 +264,8 @@ jobs:
           tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ matrix.component }}-latest,${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ matrix.component }}-${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
 
   # EC2 배포
   deploy:
