@@ -78,10 +78,19 @@ jobs:
         #     "branch": "'$GITHUB_REF_NAME'"
         #   }'
         
+        curl -X POST "https://komodo.damoang.net/api/deployment/deploy" \
+            -H "Authorization: Bearer $KOMODO_KEY:$KOMODO_SECRET" \
+          -H "Content-Type: application/json" \
+          -d '{
+          "deployment_id": "angple",
+          "image": "'$WEB_IMAGE'",
+          "branch": "'$GITHUB_REF_NAME'"
+        }'
+        
         echo "✅ Images pushed successfully:"
         echo "- Web: $WEB_IMAGE"
         echo "- Admin: $ADMIN_IMAGE"
-        
+
     - name: Deployment Summary
       if: matrix.component == 'web'
       run: |
