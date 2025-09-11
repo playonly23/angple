@@ -32,14 +32,20 @@ FROM node:24-alpine AS production
 
 WORKDIR /app
 
-RUN npm install -g pnpm
+# 빌드된 파일을 nginx로 복사
+COPY --from=build /app/build /usr/share/nginx/html
 
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --prod --frozen-lockfile
+# nginx 설정 (SPA용)
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
-COPY --from=build /app/build ./build
-COPY --from=build /app/package.json ./
+EXPOSE 80
 
-EXPOSE 3000
-
-CMD ["node", "build"]
+CMD ["nginx", "-g", "daemon off;"]
