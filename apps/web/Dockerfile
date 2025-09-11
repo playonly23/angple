@@ -21,12 +21,10 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-COPY apps/web/package.json apps/web/pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
-RUN pnpm add @sveltejs/adapter-static
-
 COPY . .
 WORKDIR /app/apps/web
+RUN pnpm install --frozen-lockfile
+RUN pnpm add @sveltejs/adapter-static
 RUN pnpm build
 
 # Production stage with nginx
