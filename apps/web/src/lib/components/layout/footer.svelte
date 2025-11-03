@@ -39,7 +39,7 @@
     ];
 </script>
 
-<footer class="mt-16 border-t border-gray-200 bg-gray-100 text-gray-800">
+<footer class="border-dusty-300 bg-dusty-50 w-full border-t text-gray-800">
     <!-- 상단 섹션 -->
     <div class="mx-auto max-w-[1200px] px-4 py-8">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
