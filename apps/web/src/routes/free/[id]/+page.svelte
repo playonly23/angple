@@ -4,6 +4,8 @@
     import { Badge } from '$lib/components/ui/badge/index.js';
     import { Button } from '$lib/components/ui/button/index.js';
     import type { PageData } from './$types.js';
+    import { NeoKeyButton } from '$lib/components/ui/neo-key-button/index.js';
+    import Heart from '@lucide/svelte/icons/heart';
 
     let { data }: { data: PageData } = $props();
 
@@ -23,6 +25,8 @@
     function goBack(): void {
         goto('/free');
     }
+
+    let isLiked = $state(false);
 </script>
 
 <svelte:head>
@@ -74,7 +78,7 @@
 
             <!-- 게시글 본문 -->
 
-            <div class="text-foreground whitespace-pre-wrap mt-8">
+            <div class="text-foreground mt-8 whitespace-pre-wrap">
                 {data.post.content}
             </div>
 
@@ -90,6 +94,25 @@
                     {/each}
                 </div>
             {/if}
+            <div class="mt-8 mb-3">
+                <div class="border border-border flex w-fit items-center rounded-[7px]">
+                    <NeoKeyButton
+                        bind:liked={isLiked}
+                        size="sm"
+                        class="text-dusty-700 justify-start"
+                    >
+                        {#if isLiked}
+                            <Heart class="fill-red-500 text-red-500 !h-6 !w-6" />
+                        {:else}
+                            <Heart class="!h-6 !w-6" />
+                        {/if}
+                    </NeoKeyButton>
+                    <!-- 좋아요 개수 -->
+                    <span class="block px-4 text-sm font-semibold">
+                        {isLiked ? data.post.likes + 1 : data.post.likes}
+                    </span>
+                </div>
+            </div>
         </CardHeader>
     </Card>
 
