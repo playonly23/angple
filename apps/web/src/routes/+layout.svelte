@@ -54,32 +54,30 @@
         <div class="mx-auto flex w-full flex-1">
             {#if snbPosition === 'right'}
                 <aside
-                    class="bg-subtle border-border my-5 hidden max-w-[320px] rounded-md border lg:block lg:flex-1"
+                    class="bg-subtle border-border my-5 hidden w-[320px] flex-shrink-0 rounded-md border lg:block"
                 >
                     <!-- 여기에 오른쪽 사이드바 내용 추가 -->
                     <Panel />
                 </aside>
             {/if}
             {#if snbPosition === 'left'}
-                <aside class="bg-background hidden w-[14.5rem] 2xl:block">
+                <aside class="bg-background hidden lg:block lg:w-[72px] 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}
 
-            <main
-                class="flex-1 overflow-y-auto pt-1 md:py-5 xl:min-w-[824px] lg:pe-6 2xl:!px-9"
-            >
+            <main class="box-content flex-1 overflow-y-auto pt-1 md:py-5 lg:pe-6 2xl:!px-9">
                 {@render children()}
             </main>
             {#if snbPosition === 'right'}
-                <aside class="bg-background hidden w-[14.5rem] 2xl:block">
+                <aside class="bg-background hidden lg:block lg:w-[72px] 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}
 
             {#if snbPosition === 'left'}
                 <aside
-                    class="bg-subtle border-border my-5 hidden max-w-[20rem] rounded-md border lg:block lg:flex-1"
+                    class="bg-subtle border-border my-5 hidden w-[320px] flex-shrink-0 rounded-md border lg:block"
                 >
                     <!-- 여기에 오른쪽 사이드바 내용 추가 -->
                     <Panel />
