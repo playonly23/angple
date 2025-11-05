@@ -31,7 +31,7 @@
 
 <div
     data-collapsed={isCollapsed}
-    class="group flex flex-col gap-4 py-2 pe-3 data-[collapsed=true]:py-2"
+    class="group flex h-full flex-col gap-4 overflow-y-auto py-2 pe-3 data-[collapsed=true]:py-2"
 >
     <nav
         class="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2"
@@ -61,7 +61,7 @@
                             {#each communityLinks as link}
                                 <Button
                                     variant="ghost"
-                                    class="w-full justify-start gap-2"
+                                    class="w-full justify-start gap-2 hover:bg-dusty-100 dark:hover:bg-dusty-800"
                                     href={link.href}
                                 >
                                     {link.label}
@@ -90,7 +90,7 @@
                             {#each gatheringLinks as link}
                                 <Button
                                     variant="ghost"
-                                    class="w-full justify-start gap-2"
+                                    class="w-full justify-start gap-2 hover:bg-dusty-100 dark:hover:bg-dusty-800"
                                     href={link.href}
                                 >
                                     {link.label}

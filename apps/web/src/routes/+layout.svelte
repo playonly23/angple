@@ -61,7 +61,7 @@
                 </aside>
             {/if}
             {#if snbPosition === 'left'}
-                <aside class="bg-background hidden lg:block lg:w-[72px] 2xl:!w-[230px]">
+                <aside class="bg-background sticky top-12 md:top-16 self-start hidden h-[calc(100vh-3rem)] md:h-[calc(100vh-4rem)] 2xl:block 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}
@@ -70,7 +70,7 @@
                 {@render children()}
             </main>
             {#if snbPosition === 'right'}
-                <aside class="bg-background hidden lg:block lg:w-[72px] 2xl:!w-[230px]">
+                <aside class="bg-background hidden 2xl:block 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}

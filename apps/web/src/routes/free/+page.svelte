@@ -50,7 +50,7 @@
     <!-- 헤더 -->
     <div class="mb-8">
         <h1 class="text-foreground mb-2 text-3xl font-bold">자유게시판</h1>
-        <p class="text-muted-foreground">다모앙 커뮤니티의 자유로운 소통 공간입니다.</p>
+        <p class="text-secondary-foreground">다모앙 커뮤니티의 자유로운 소통 공간입니다.</p>
     </div>
 
     <!-- 에러 메시지 -->
@@ -65,19 +65,19 @@
     <!-- 게시글 목록 -->
     <div class="space-y-4">
         {#if data.posts.length === 0}
-            <Card>
+            <Card class="bg-background">
                 <CardContent class="py-12 text-center">
-                    <p class="text-muted-foreground">게시글이 없습니다.</p>
+                    <p class="text-secondary-foreground">게시글이 없습니다.</p>
                 </CardContent>
             </Card>
         {:else}
             {#each data.posts as post}
-                <Card class="hover:shadow-md transition-shadow cursor-pointer" onclick={() => goToPost(post.id)}>
+                <Card class="bg-background hover:shadow-md transition-shadow cursor-pointer" onclick={() => goToPost(post.id)}>
                     <CardHeader>
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex-1 min-w-0">
                                 <CardTitle class="text-foreground mb-2 truncate">{post.title}</CardTitle>
-                                <div class="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+                                <div class="text-secondary-foreground flex flex-wrap items-center gap-2 text-sm">
                                     <span>{post.author}</span>
                                     <span>•</span>
                                     <span>{formatDate(post.created_at)}</span>
@@ -95,10 +95,10 @@
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <p class="text-muted-foreground mb-4 line-clamp-2">
+                        <p class="text-secondary-foreground mb-4 line-clamp-2">
                             {post.content}
                         </p>
-                        <div class="text-muted-foreground flex items-center gap-4 text-sm">
+                        <div class="text-secondary-foreground flex items-center gap-4 text-sm">
                             <span>👍 {post.likes}</span>
                             <span>💬 {post.comments_count}</span>
                         </div>
@@ -145,7 +145,7 @@
             </Button>
         </div>
 
-        <p class="text-muted-foreground mt-4 text-center text-sm">
+        <p class="text-secondary-foreground mt-4 text-center text-sm">
             전체 {data.pagination.total.toLocaleString()}개 중 {data.pagination.page} / {data.pagination.totalPages} 페이지
         </p>
     {/if}
