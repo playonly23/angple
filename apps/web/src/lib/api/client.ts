@@ -20,8 +20,9 @@ class ApiClient {
         // 브라우저 환경에서만 로컬스토리지 접근
         if (typeof window !== 'undefined') {
             this.loadToken();
-            // 환경변수나 로컬스토리지에서 Mock 모드 확인
-            this.useMock = localStorage.getItem('damoang_use_mock') === 'true';
+            // Mock 모드 확인: 로컬스토리지에 명시적 설정이 없으면 기본값 true (개발 편의성)
+            const mockSetting = localStorage.getItem('damoang_use_mock');
+            this.useMock = mockSetting !== 'false'; // 'false'가 아니면 true (기본값)
         }
     }
 
