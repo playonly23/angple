@@ -30,7 +30,7 @@
     <meta name="description" content={data.post.content.slice(0, 150)} />
 </svelte:head>
 
-<div class="container mx-auto max-w-4xl px-4 py-8">
+<div class="mx-auto pt-2">
     <!-- 상단 네비게이션 -->
     <div class="mb-6">
         <Button variant="outline" size="sm" onclick={goBack}>
