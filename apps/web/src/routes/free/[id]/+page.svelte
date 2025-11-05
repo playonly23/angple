@@ -33,14 +33,12 @@
 <div class="mx-auto pt-2">
     <!-- 상단 네비게이션 -->
     <div class="mb-6">
-        <Button variant="outline" size="sm" onclick={goBack}>
-            ← 목록으로
-        </Button>
+        <Button variant="outline" size="sm" onclick={goBack}>← 목록으로</Button>
     </div>
 
     <!-- 게시글 헤더 -->
-    <Card class="mb-6">
-        <CardHeader class="space-y-4">
+    <Card class="bg-background ">
+        <CardHeader class="space-y-3">
             <div>
                 {#if data.post.tags && data.post.tags.length > 0}
                     <div class="mb-3 flex flex-wrap gap-2">
@@ -54,28 +52,29 @@
 
             <div class="border-border flex flex-wrap items-center gap-4 border-t pt-4">
                 <div class="flex items-center gap-2">
-                    <div class="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-full">
+                    <div
+                        class="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-full"
+                    >
                         {data.post.author.charAt(0).toUpperCase()}
                     </div>
                     <div>
                         <p class="text-foreground font-medium">{data.post.author}</p>
-                        <p class="text-muted-foreground text-sm">
+                        <p class="text-secondary-foreground text-sm">
                             {formatDate(data.post.created_at)}
                         </p>
                     </div>
                 </div>
 
-                <div class="text-muted-foreground ml-auto flex gap-4 text-sm">
+                <div class="text-secondary-foreground ml-auto flex gap-4 text-sm">
                     <span>조회 {data.post.views.toLocaleString()}</span>
                     <span>👍 {data.post.likes.toLocaleString()}</span>
                     <span>💬 {data.post.comments_count.toLocaleString()}</span>
                 </div>
             </div>
 
+            <!-- 게시글 본문 -->
 
-    <!-- 게시글 본문 -->
-
-            <div class="text-foreground whitespace-pre-wrap">
+            <div class="text-foreground whitespace-pre-wrap mt-8">
                 {data.post.content}
             </div>
 
@@ -95,10 +94,8 @@
     </Card>
 
     <!-- 하단 액션 버튼 -->
-    <div class="flex items-center justify-between">
-        <Button variant="outline" onclick={goBack}>
-            ← 목록으로
-        </Button>
+    <div class="mt-4 flex items-center justify-between">
+        <Button variant="outline" onclick={goBack}>← 목록으로</Button>
 
         <div class="flex gap-2">
             <Button variant="outline" size="sm">
