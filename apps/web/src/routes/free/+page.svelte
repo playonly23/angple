@@ -46,7 +46,7 @@
     }
 </script>
 
-<div class="container mx-auto max-w-6xl px-4 py-8">
+<div class="mx-auto pt-4">
     <!-- 헤더 -->
     <div class="mb-8">
         <h1 class="text-foreground mb-2 text-3xl font-bold">자유게시판</h1>

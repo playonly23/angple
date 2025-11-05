@@ -67,7 +67,7 @@
             {/if}
 
             <main
-                class="flex-1 overflow-y-auto rounded-t-xl pt-1 md:py-5 lg:pe-6 xl:min-w-[824px] 2xl:px-6"
+                class="flex-1 overflow-y-auto pt-1 md:py-5 xl:min-w-[824px] lg:pe-6 2xl:!px-9"
             >
                 {@render children()}
             </main>
