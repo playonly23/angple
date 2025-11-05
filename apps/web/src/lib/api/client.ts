@@ -11,6 +11,24 @@ import { getMockFreePosts, getMockFreePost } from './mock-data.js';
 
 const API_BASE_URL = 'https://api.ang.dev/api/v1';
 
+/**
+ * API 클라이언트
+ *
+ * ⚠️ 보안 경고:
+ * 현재 accessToken을 localStorage에 저장하고 있어 XSS 공격에 취약합니다.
+ *
+ * 🔒 권장 보안 개선 사항:
+ * 1. refreshToken → httpOnly cookie (서버에서만 접근)
+ * 2. accessToken → 메모리 저장 (페이지 로드 시마다 refreshToken으로 재발급)
+ * 3. CSRF 보호를 위한 SameSite=Strict 설정
+ *
+ * 📋 개선 계획:
+ * - Phase 1: Mock 데이터로 UI/UX 개발 (현재 단계)
+ * - Phase 2: 백엔드 인증 API 개선 (httpOnly cookie 지원)
+ * - Phase 3: 프론트엔드 토큰 관리 리팩토링
+ *
+ * @see https://github.com/playonly23/angple/issues/XX (보안 이슈 링크)
+ */
 class ApiClient {
     private token: string | null = null;
     private tokenExpiry: Date | null = null;
@@ -40,6 +58,7 @@ class ApiClient {
     }
 
     // 로컬스토리지에서 토큰 로드
+    // ⚠️ TODO: httpOnly cookie로 마이그레이션 필요
     private loadToken(): void {
         const savedToken = localStorage.getItem('damoang_api_token');
         const savedExpiry = localStorage.getItem('damoang_api_token_expiry');
@@ -56,6 +75,8 @@ class ApiClient {
     }
 
     // 토큰 저장
+    // ⚠️ SECURITY: localStorage는 XSS 공격에 취약합니다.
+    // TODO: 백엔드에서 httpOnly cookie 지원 후 제거 예정
     private saveToken(token: string, expiresAt: string): void {
         this.token = token;
         this.tokenExpiry = new Date(expiresAt);
