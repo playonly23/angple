@@ -71,12 +71,10 @@
                     <span>💬 {data.post.comments_count.toLocaleString()}</span>
                 </div>
             </div>
-        </CardHeader>
-    </Card>
+
 
     <!-- 게시글 본문 -->
-    <Card class="mb-6">
-        <CardContent class="prose dark:prose-invert max-w-none pt-6">
+
             <div class="text-foreground whitespace-pre-wrap">
                 {data.post.content}
             </div>
@@ -93,7 +91,7 @@
                     {/each}
                 </div>
             {/if}
-        </CardContent>
+        </CardHeader>
     </Card>
 
     <!-- 하단 액션 버튼 -->
