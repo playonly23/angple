@@ -1,5 +1,6 @@
 <script lang="ts">
     import '../app.css';
+    import favicon from '$lib/assets/favicon.png';
     import { onMount } from 'svelte';
     import Header from '$lib/components/layout/header.svelte';
     import Sidebar from '$lib/components/layout/sidebar.svelte';
@@ -36,8 +37,9 @@
 </script>
 
 <svelte:head>
-    <title>Quilt UI Kit</title>
+    <title>다모앙</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href={favicon} />
 </svelte:head>
 
 <div class="relative flex min-h-screen flex-col items-center">
