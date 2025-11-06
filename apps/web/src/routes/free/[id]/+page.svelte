@@ -104,7 +104,7 @@
                         {#if isLiked}
                             <Heart class="fill-red-500 text-red-500 !h-6 !w-6" />
                         {:else}
-                            <Heart class="!h-6 !w-6" />
+                            <Heart class="!h-6 !w-6 dark:text-dusty-400" />
                         {/if}
                     </NeoKeyButton>
                     <!-- 좋아요 개수 -->
@@ -117,7 +117,7 @@
     </Card>
 
     <!-- 하단 액션 버튼 -->
-    <div class="mt-4 flex items-center justify-between">
+    <!-- <div class="mt-4 flex items-center justify-between">
         <Button variant="outline" onclick={goBack}>← 목록으로</Button>
 
         <div class="flex gap-2">
@@ -128,7 +128,7 @@
                 💬 댓글 {data.post.comments_count}
             </Button>
         </div>
-    </div>
+    </div> -->
 
     <!-- 수정/삭제 시간 표시 -->
     {#if data.post.updated_at !== data.post.created_at}
