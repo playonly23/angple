@@ -60,7 +60,7 @@
 </script>
 
 <header
-    class="bg-background border-dusty-300 fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ease-in-out"
+    class="bg-background border-border fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ease-in-out"
     class:translate-y-0={isHeaderVisible}
     class:-translate-y-full={!isHeaderVisible}
     class:shadow-sm={isScrolled}
