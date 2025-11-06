@@ -39,13 +39,13 @@
     ];
 </script>
 
-<footer class="border-dusty-300 bg-dusty-50 w-full border-t text-gray-800">
+<footer class="border-border bg-dusty-50 dark:bg-dusty-900 w-full border-t">
     <!-- 상단 섹션 -->
     <div class="mx-auto max-w-[1200px] px-4 py-8">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             <!-- 앙포털 -->
             <div>
-                <h3 class="mb-4 text-lg font-semibold text-gray-900">앙포털</h3>
+                <h3 class="mb-4 text-lg font-semibold text-dusty-900 dark:text-dusty-200">앙포털</h3>
                 <ul class="space-y-2">
                     {#each angportalLinks as link}
                         <li>
@@ -53,7 +53,7 @@
                                 href={link.href}
                                 target={link.external ? '_blank' : undefined}
                                 rel={link.external ? 'noopener noreferrer' : undefined}
-                                class="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                                class="text-sm text-dusty-600 dark:text-dusty-400 transition-colors hover:text-blue-600"
                             >
                                 {link.name}
                             </a>
@@ -64,7 +64,7 @@
 
             <!-- 함께만들어가요 -->
             <div>
-                <h3 class="mb-4 text-lg font-semibold text-gray-900">함께만들어가요</h3>
+                <h3 class="mb-4 text-lg font-semibold text-dusty-900 dark:text-dusty-200">함께만들어가요</h3>
                 <ul class="space-y-2">
                     {#each togetherLinks as link}
                         <li>
@@ -72,7 +72,7 @@
                                 href={link.href}
                                 target={link.external ? '_blank' : undefined}
                                 rel={link.external ? 'noopener noreferrer' : undefined}
-                                class="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                                class="text-sm text-dusty-600 dark:text-dusty-400 transition-colors hover:text-blue-600"
                             >
                                 {link.name}
                             </a>
@@ -83,7 +83,7 @@
 
             <!-- 시스템 -->
             <div>
-                <h3 class="mb-4 text-lg font-semibold text-gray-900">시스템</h3>
+                <h3 class="mb-4 text-lg font-semibold text-dusty-900 dark:text-dusty-200">시스템</h3>
                 <ul class="space-y-2">
                     {#each systemLinks as link}
                         <li>
@@ -91,7 +91,7 @@
                                 href={link.href}
                                 target={link.external ? '_blank' : undefined}
                                 rel={link.external ? 'noopener noreferrer' : undefined}
-                                class="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                                class="text-sm text-dusty-600 dark:text-dusty-400 transition-colors hover:text-blue-600"
                             >
                                 {link.name}
                             </a>
@@ -108,7 +108,7 @@
                         <li>
                             <a
                                 href={link.href}
-                                class="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                                class="text-sm text-dusty-600 dark:text-dusty-400 transition-colors hover:text-blue-600"
                             >
                                 {link.name}
                             </a>
@@ -120,9 +120,9 @@
     </div>
 
     <!-- 저작권 및 연락처 섹션 -->
-    <div class=" bg-gray-100">
+    <div class=" bg-canvas">
         <div class="mx-auto max-w-[1200px] px-4 py-6 text-center">
-            <div class="space-y-2 text-sm text-gray-700">
+            <div class="space-y-2 text-sm text-dusty-700 dark:text-dusty-300">
                 <p>© SDK Co., Ltd. All rights reserved.</p>
                 <p>
                     제보/신고 : jebo@damoang.net, 문의(광고 그리고 모든 문의) : contact@damoang.net
