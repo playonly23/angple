@@ -97,7 +97,7 @@
     position: absolute;
     content: "";
     inset: 0;
-    background-color: var(--tw-bg-secondary, #f3f4f6);
+    background-color: var(--color-subtle);
     border-radius: calc(var(--btn-radius) - 1px);
     box-shadow: 
       0 0 0 1px var(--color-border),
@@ -108,19 +108,19 @@
   }
 
   .btn-3d:hover:not(:disabled) {
-    background-color: var(--tw-bg-tertiary, #f9fafb);
+    background-color: var(--color-canvas);
     transform: translate(0, calc(var(--btn-translate) * 0.4));
   }
 
   .btn-3d:hover:not(:disabled)::before {
     box-shadow: 
-      0 0 0 1px var(--tw-border-primary, #e5e7eb),
+      0 0 0 1px var(--color-canvas),
       0 6px 4px 1px rgba(0, 0, 0, 0.15);
     transform: translate3d(0, calc(var(--btn-translate) * 0.6), -12px);
   }
 
   .btn-3d:active:not(:disabled) {
-    background-color: var(--tw-bg-secondary, #f3f4f6);
+    background-color: var(--color-subtle);
     transform: translate(0, var(--btn-translate));
   }
 
