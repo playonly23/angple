@@ -9,7 +9,7 @@
             variant: {
                 default: 'bg-primary text-primary-foreground border-transparent shadow hover:bg-primary/80',
                 secondary:
-                    'bg-secondary text-secondary-foreground border-transparent hover:bg-secondary/80',
+                    'bg-subtle text-secondary-foreground border-transparent hover:bg-secondary/80',
                 destructive:
                     'bg-destructive text-destructive-foreground border-transparent shadow hover:bg-destructive/80',
                 outline: 'text-foreground'

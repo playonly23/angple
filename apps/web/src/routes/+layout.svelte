@@ -1,5 +1,6 @@
 <script lang="ts">
     import '../app.css';
+    import favicon from '$lib/assets/favicon.png';
     import { onMount } from 'svelte';
     import Header from '$lib/components/layout/header.svelte';
     import Sidebar from '$lib/components/layout/sidebar.svelte';
@@ -36,8 +37,9 @@
 </script>
 
 <svelte:head>
-    <title>Quilt UI Kit</title>
+    <title>다모앙</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href={favicon} />
 </svelte:head>
 
 <div class="relative flex min-h-screen flex-col items-center">
@@ -54,32 +56,30 @@
         <div class="mx-auto flex w-full flex-1">
             {#if snbPosition === 'right'}
                 <aside
-                    class="bg-subtle border-border my-5 hidden max-w-[320px] rounded-md border lg:block lg:flex-1"
+                    class="bg-subtle border-border my-5 hidden w-[320px] flex-shrink-0 rounded-md border lg:block"
                 >
                     <!-- 여기에 오른쪽 사이드바 내용 추가 -->
                     <Panel />
                 </aside>
             {/if}
             {#if snbPosition === 'left'}
-                <aside class="bg-background hidden w-[14.5rem] 2xl:block">
+                <aside class="bg-background sticky top-12 md:top-16 self-start hidden h-[calc(100vh-3rem)] md:h-[calc(100vh-4rem)] 2xl:block 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}
 
-            <main
-                class="flex-1 overflow-y-auto rounded-t-xl pt-1 md:py-5 lg:pe-6 xl:min-w-[824px] 2xl:px-6"
-            >
+            <main class="box-content flex-1 overflow-y-auto pt-1 md:py-5 lg:pe-6 2xl:!px-9">
                 {@render children()}
             </main>
             {#if snbPosition === 'right'}
-                <aside class="bg-background hidden w-[14.5rem] 2xl:block">
+                <aside class="bg-background hidden 2xl:block 2xl:!w-[230px]">
                     <Sidebar />
                 </aside>
             {/if}
 
             {#if snbPosition === 'left'}
                 <aside
-                    class="bg-subtle border-border my-5 hidden max-w-[20rem] rounded-md border lg:block lg:flex-1"
+                    class="bg-subtle border-border my-5 hidden w-[320px] flex-shrink-0 rounded-md border lg:block"
                 >
                     <!-- 여기에 오른쪽 사이드바 내용 추가 -->
                     <Panel />
