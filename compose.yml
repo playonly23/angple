@@ -1,0 +1,30 @@
+services:
+  # Web Application
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: production
+    container_name: angple-web
+    ports:
+      - "5173:80"
+    restart: unless-stopped
+    networks:
+      - angple-network
+
+  # Admin Dashboard
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+      target: production
+    container_name: angple-admin
+    ports:
+      - "5174:80"
+    restart: unless-stopped
+    networks:
+      - angple-network
+
+networks:
+  angple-network:
+    driver: bridge
