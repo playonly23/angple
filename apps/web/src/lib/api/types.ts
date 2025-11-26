@@ -30,6 +30,20 @@ export interface FreePost {
     images?: string[];
 }
 
+// 자유게시판 댓글 타입
+export interface FreeComment {
+    id: string;
+    content: string;
+    author: string;
+    author_id: string;
+    likes: number;
+    depth: number;
+    parent_id: string;
+    created_at: string;
+    updated_at: string;
+    images?: string[];
+}
+
 // API 키 등록 요청/응답
 export interface RegisterApiKeyRequest {
     name: string;
