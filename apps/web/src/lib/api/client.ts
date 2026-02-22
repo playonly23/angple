@@ -64,22 +64,21 @@ const API_BASE_URL = browser
 // v2 API URL (인증 관련 - exchange 등)
 const API_V2_URL = browser ? '/api/v2' : 'http://localhost:8090/api/v2';
 
-// 레거시 SSO 쿠키명 (환경변수로 설정, 빈 값이면 레거시 SSO 비활성화)
-const LEGACY_SSO_COOKIE = import.meta.env.VITE_LEGACY_SSO_COOKIE || '';
+// v2 API URL은 세션 기반 인증에서는 SvelteKit 프록시가 내부 JWT를 주입하므로
+// 클라이언트에서 직접 사용할 일이 줄어듦 (exchangeToken 등 레거시 호환용으로 유지)
 
 /**
  * API 클라이언트
  *
  * 🔒 보안 기능:
- * - httpOnly cookie를 사용한 Refresh Token 관리 (XSS 공격 방지)
- * - Access Token은 메모리에만 저장 (localStorage 사용 안 함)
+ * - httpOnly 세션 쿠키(angple_sid)로 인증 (서버사이드 세션)
+ * - CSRF Double-submit: angple_csrf 쿠키에서 읽어 X-CSRF-Token 헤더로 전송
  * - 모든 요청에 credentials: 'include'로 쿠키 자동 전송
- * - 401 응답 시 자동 토큰 갱신 후 재시도
+ * - 401 응답 시 자동 토큰 갱신 후 재시도 (레거시 호환)
  */
 class ApiClient {
-    // 메모리 기반 액세스 토큰 (XSS 공격 방지)
+    // 메모리 기반 액세스 토큰 (SSR에서 받은 내부 JWT, Go 백엔드 통신용)
     private _accessToken: string | null = null;
-    private _refreshPromise: Promise<boolean> | null = null;
     private _fetchFn: typeof fetch | null = null;
 
     /** SvelteKit load 함수에서 제공하는 fetch를 임시 주입 (1회성) */
@@ -93,82 +92,42 @@ class ApiClient {
         this._accessToken = token;
     }
 
-    /** 현재 액세스 토큰 조회 (메모리에서만) */
+    /** 현재 액세스 토큰 조회 (메모리에서만, SSR 데이터로 설정됨) */
     getAccessToken(): string | null {
         if (!browser) return null;
-        if (this._accessToken) return this._accessToken;
+        return this._accessToken;
+    }
 
-        // 하위 호환: 레거시 SSO 쿠키 확인
-        if (LEGACY_SSO_COOKIE) {
-            const jwtCookie = document.cookie
-                .split('; ')
-                .find((row) => row.startsWith(`${LEGACY_SSO_COOKIE}=`));
-            if (jwtCookie) {
-                return jwtCookie.split('=')[1];
-            }
+    /** CSRF 토큰 읽기 (angple_csrf 쿠키) */
+    private getCsrfToken(): string | null {
+        if (!browser) return null;
+        const match = document.cookie.split('; ').find((r) => r.startsWith('angple_csrf='));
+        return match ? match.split('=')[1] : null;
+    }
+
+    /** CSRF 헤더 포함한 headers 객체 생성 (직접 fetch 사용 시) */
+    private buildHeaders(extra?: Record<string, string>): Record<string, string> {
+        const headers: Record<string, string> = { ...extra };
+        const csrfToken = this.getCsrfToken();
+        if (csrfToken) {
+            headers['X-CSRF-Token'] = csrfToken;
         }
-        return null;
+        return headers;
     }
 
-    /** 레거시 SSO 쿠키 존재 여부 확인 */
-    private hasLegacySsoCookie(): boolean {
-        if (!browser || !LEGACY_SSO_COOKIE) return false;
-        return document.cookie.split('; ').some((row) => row.startsWith(`${LEGACY_SSO_COOKIE}=`));
-    }
-
-    /** refresh_token 쿠키 존재 여부 확인 */
-    private hasRefreshTokenCookie(): boolean {
-        if (!browser) return false;
-        return document.cookie.split('; ').some((row) => row.startsWith('refresh_token='));
-    }
-
-    /** refreshToken 쿠키로 accessToken 자동 갱신 */
+    /**
+     * @deprecated 세션 기반 인증에서는 토큰 갱신 불필요
+     * 서버가 세션 쿠키로 인증하므로 클라이언트 토큰 관리 없음
+     */
     async tryRefreshToken(): Promise<boolean> {
-        // 레거시 SSO 쿠키가 있으면 refresh 시도하지 않음
-        // (refresh_token은 Go API 로그인 시에만 설정됨)
-        if (this.hasLegacySsoCookie()) {
-            return false;
-        }
-
-        // 이미 access_token이 있으면 갱신 불필요
-        if (this._accessToken) {
-            return true;
-        }
-
-        if (this._refreshPromise) return this._refreshPromise;
-
-        this._refreshPromise = (async () => {
-            try {
-                const url = `${API_BASE_URL}/auth/refresh`;
-                const response = await fetch(url, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                if (!response.ok) return false;
-                const data = await response.json();
-                const newToken = data?.data?.access_token;
-                if (newToken) {
-                    this._accessToken = newToken;
-                    return true;
-                }
-                return false;
-            } catch {
-                return false;
-            } finally {
-                this._refreshPromise = null;
-            }
-        })();
-
-        return this._refreshPromise;
+        return !!this._accessToken;
     }
 
     // HTTP 요청 헬퍼
     private async request<T>(
         endpoint: string,
         options: RequestInit = {},
-        retryConfig?: Partial<RetryConfig>,
-        _isRetryAfterRefresh = false
+        retryConfig?: Partial<RetryConfig>
     ): Promise<ApiResponse<T>> {
         const url = `${API_BASE_URL}${endpoint}`;
 
@@ -180,6 +139,15 @@ class ApiClient {
         const accessToken = this.getAccessToken();
         if (accessToken) {
             headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+
+        // CSRF 토큰: POST/PUT/PATCH/DELETE 요청에 자동 포함
+        const method = (options.method || 'GET').toUpperCase();
+        if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+            const csrfToken = this.getCsrfToken();
+            if (csrfToken) {
+                headers['X-CSRF-Token'] = csrfToken;
+            }
         }
 
         const config: RetryConfig = { ...DEFAULT_RETRY_CONFIG, ...retryConfig };
@@ -218,14 +186,6 @@ class ApiClient {
             } else {
                 if (!response.ok) throw new Error(`서버 에러 (${response.status})`);
                 return { data: undefined as T } as ApiResponse<T>;
-            }
-
-            // 401 → 자동 토큰 갱신 후 재시도 (1회만)
-            if (response.status === 401 && !_isRetryAfterRefresh && browser) {
-                const refreshed = await this.tryRefreshToken();
-                if (refreshed) {
-                    return this.request<T>(endpoint, options, retryConfig, true);
-                }
             }
 
             if (!response.ok) {
@@ -914,7 +874,7 @@ class ApiClient {
     async likePost(boardId: string, postId: string): Promise<LikeResponse> {
         const res = await fetch(`/api/boards/${boardId}/posts/${postId}/like`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: this.buildHeaders({ 'Content-Type': 'application/json' }),
             credentials: 'include',
             body: JSON.stringify({ action: 'good' })
         });
@@ -930,7 +890,7 @@ class ApiClient {
     async dislikePost(boardId: string, postId: string): Promise<LikeResponse> {
         const res = await fetch(`/api/boards/${boardId}/posts/${postId}/like`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: this.buildHeaders({ 'Content-Type': 'application/json' }),
             credentials: 'include',
             body: JSON.stringify({ action: 'nogood' })
         });
@@ -1557,10 +1517,10 @@ class ApiClient {
      * 아이디/비밀번호 로그인
      */
     async login(request: LoginRequest): Promise<LoginResponse> {
-        const url = `${API_V2_URL}/auth/login`;
-        const response = await fetch(url, {
+        // SvelteKit 프록시 경유: 세션 생성 + 쿠키 설정을 서버가 처리
+        const response = await fetch('/api/auth/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: this.buildHeaders({ 'Content-Type': 'application/json' }),
             credentials: 'include',
             body: JSON.stringify({
                 username: request.username,
@@ -1580,7 +1540,7 @@ class ApiClient {
 
         const data = json.data;
 
-        // 액세스 토큰을 메모리에 저장 (httpOnly 쿠키로 refreshToken은 자동 설정됨)
+        // 레거시 호환: 액세스 토큰을 메모리에 저장
         if (data.access_token) {
             this._accessToken = data.access_token;
         }
@@ -1692,6 +1652,7 @@ class ApiClient {
     async exchangeToken(): Promise<LoginResponse> {
         const response = await fetch(`${API_V2_URL}/auth/exchange`, {
             method: 'POST',
+            headers: this.buildHeaders(),
             credentials: 'include'
         });
 
