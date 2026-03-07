@@ -28,6 +28,7 @@
     });
     let agreeTerms = $state(false);
     let agreePrivacy = $state(false);
+    let agreePolicy = $state(false);
     let isSubmitting = $state(false);
     let turnstileRef: HTMLDivElement | undefined = $state();
     let turnstileWidgetId: string | undefined = $state();
@@ -46,21 +47,32 @@
         }
     });
 
-    // 약관/개인정보 스크롤 끝까지 읽었는지 여부
-    let termsRead = $state(!data.termsHtml);
-    let privacyRead = $state(!data.privacyHtml);
+    // 약관/개인정보처리방침/이용제한사유 스크롤 끝까지 읽었는지 여부
+    let termsScrolled = $state(false);
+    let privacyScrolled = $state(false);
+    let policyScrolled = $state(false);
+    let termsRead = $derived(termsScrolled || !data.termsHtml);
+    let privacyRead = $derived(privacyScrolled || !data.privacyHtml);
+    let policyRead = $derived(policyScrolled || !data.policyHtml);
 
     function handleTermsScroll(e: Event) {
         const el = e.target as HTMLDivElement;
         if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
-            termsRead = true;
+            termsScrolled = true;
         }
     }
 
     function handlePrivacyScroll(e: Event) {
         const el = e.target as HTMLDivElement;
         if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
-            privacyRead = true;
+            privacyScrolled = true;
+        }
+    }
+
+    function handlePolicyScroll(e: Event) {
+        const el = e.target as HTMLDivElement;
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
+            policyScrolled = true;
         }
     }
 
@@ -105,9 +117,19 @@
 <div class="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12">
     <Card class="w-full max-w-lg">
         <CardHeader class="text-center">
-            <CardTitle class="text-2xl font-bold">회원가입</CardTitle>
+            <CardTitle class="text-2xl font-bold">
+                {#if data.isInviteFlow}
+                    광고주 가입
+                {:else}
+                    회원가입
+                {/if}
+            </CardTitle>
             <CardDescription>
-                {providerLabel} 계정으로 가입합니다
+                {#if data.isInviteFlow}
+                    광고 계정 연동을 위해 간편 가입합니다
+                {:else}
+                    {providerLabel} 계정으로 가입합니다
+                {/if}
                 {#if data.email}
                     <br />
                     <span class="text-foreground font-medium">{data.email}</span>
@@ -126,7 +148,11 @@
                 method="POST"
                 use:enhance={() => {
                     isSubmitting = true;
-                    return async ({ update }) => {
+                    return async ({ result, update }) => {
+                        if (result.type === 'redirect') {
+                            window.location.href = result.location;
+                            return;
+                        }
                         isSubmitting = false;
                         await update();
                     };
@@ -136,27 +162,33 @@
                 <input type="hidden" name="redirect" value={data.redirectUrl} />
 
                 <!-- 닉네임 입력 -->
-                <div class="space-y-2" bind:this={nicknameRef}>
-                    <Label for="nickname">닉네임 <span class="text-destructive">*</span></Label>
-                    <Input
-                        id="nickname"
-                        name="nickname"
-                        type="text"
-                        placeholder="사용할 닉네임을 입력하세요"
-                        bind:value={nickname}
-                        maxlength={20}
-                        minlength={2}
-                        required
-                        disabled={isSubmitting}
-                        class={isNicknameError ? 'border-destructive' : ''}
-                    />
-                    {#if isNicknameError}
-                        <p class="text-destructive text-xs font-medium">{form?.error}</p>
-                    {/if}
-                    <p class="text-muted-foreground text-xs">
-                        한글, 영문, 숫자, 점(.), 밑줄(_) 사용 가능 (2~20자)
-                    </p>
-                </div>
+                {#if data.isInviteFlow}
+                    <div class="bg-muted/50 text-muted-foreground rounded-md p-3 text-sm">
+                        닉네임은 자동으로 생성됩니다. 가입 후 변경 가능합니다.
+                    </div>
+                {:else}
+                    <div class="space-y-2" bind:this={nicknameRef}>
+                        <Label for="nickname">닉네임 <span class="text-destructive">*</span></Label>
+                        <Input
+                            id="nickname"
+                            name="nickname"
+                            type="text"
+                            placeholder="사용할 닉네임을 입력하세요"
+                            bind:value={nickname}
+                            maxlength={20}
+                            minlength={2}
+                            required
+                            disabled={isSubmitting}
+                            class={isNicknameError ? 'border-destructive' : ''}
+                        />
+                        {#if isNicknameError}
+                            <p class="text-destructive text-xs font-medium">{form?.error}</p>
+                        {/if}
+                        <p class="text-muted-foreground text-xs">
+                            한글, 영문, 숫자, 점(.), 밑줄(_) 사용 가능 (2~20자)
+                        </p>
+                    </div>
+                {/if}
 
                 <!-- 이용약관 -->
                 <div class="space-y-2">
@@ -226,12 +258,49 @@
                     </div>
                 </div>
 
+                <!-- 이용제한사유 안내 -->
+                {#if data.policyHtml}
+                    <div class="space-y-2">
+                        <Label class="font-medium">
+                            이용제한사유 안내 <span class="text-destructive">*</span>
+                        </Label>
+                        <div
+                            class="terms-content border-border bg-muted/30 max-h-48 overflow-y-auto rounded-md border p-3 text-xs leading-relaxed"
+                            onscroll={handlePolicyScroll}
+                        >
+                            {@html data.policyHtml}
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <Checkbox
+                                id="agree_policy"
+                                bind:checked={agreePolicy}
+                                disabled={isSubmitting || !policyRead}
+                            />
+                            <Label
+                                for="agree_policy"
+                                class="cursor-pointer text-sm {policyRead
+                                    ? ''
+                                    : 'text-muted-foreground'}"
+                            >
+                                {#if policyRead}
+                                    이용제한사유 안내에 동의합니다
+                                {:else}
+                                    안내를 끝까지 읽어주세요
+                                {/if}
+                            </Label>
+                        </div>
+                    </div>
+                {/if}
+
                 <!-- 체크박스 값 전송용 hidden input -->
                 {#if agreeTerms}
                     <input type="hidden" name="agree_terms" value="on" />
                 {/if}
                 {#if agreePrivacy}
                     <input type="hidden" name="agree_privacy" value="on" />
+                {/if}
+                {#if agreePolicy}
+                    <input type="hidden" name="agree_policy" value="on" />
                 {/if}
 
                 <!-- Turnstile CAPTCHA -->
@@ -243,14 +312,22 @@
                 <Button
                     type="submit"
                     class="w-full"
-                    disabled={isSubmitting || !nickname.trim() || !agreeTerms || !agreePrivacy}
+                    disabled={isSubmitting ||
+                        (!data.isInviteFlow && !nickname.trim()) ||
+                        !agreeTerms ||
+                        !agreePrivacy ||
+                        (data.policyHtml && !agreePolicy)}
                 >
                     {#if isSubmitting}
                         <Loader2 class="mr-2 h-4 w-4 animate-spin" />
                         가입 중...
                     {:else}
                         <UserPlus class="mr-2 h-4 w-4" />
-                        가입하기
+                        {#if data.isInviteFlow}
+                            가입 및 연동하기
+                        {:else}
+                            가입하기
+                        {/if}
                     {/if}
                 </Button>
             </form>

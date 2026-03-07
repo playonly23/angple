@@ -26,16 +26,55 @@
         );
     }
 
-    // 팝업에서 인증 완료 시 메시지 수신
+    // 팝업에서 인증 완료 시 메시지 수신 (postMessage + localStorage 이벤트)
     function handleMessage(e: MessageEvent) {
         if (e.data?.type === 'cert_complete' && e.data?.success) {
             location.reload();
         }
     }
 
+    function handleStorage(e: StorageEvent) {
+        if (e.key === 'cert_result') {
+            try {
+                const result = JSON.parse(e.newValue || '');
+                if (result.success) {
+                    localStorage.removeItem('cert_result');
+                    location.reload();
+                }
+            } catch {
+                // ignore
+            }
+        }
+    }
+
+    // localStorage 폴링 (storage 이벤트가 동작하지 않는 경우 대비)
+    let pollTimer: ReturnType<typeof setInterval> | undefined;
+
+    function startPolling() {
+        pollTimer = setInterval(() => {
+            try {
+                const raw = localStorage.getItem('cert_result');
+                if (raw) {
+                    const result = JSON.parse(raw);
+                    if (result.success) {
+                        localStorage.removeItem('cert_result');
+                        clearInterval(pollTimer);
+                        location.reload();
+                    }
+                }
+            } catch {}
+        }, 1000);
+    }
+
     $effect(() => {
         window.addEventListener('message', handleMessage);
-        return () => window.removeEventListener('message', handleMessage);
+        window.addEventListener('storage', handleStorage);
+        startPolling();
+        return () => {
+            window.removeEventListener('message', handleMessage);
+            window.removeEventListener('storage', handleStorage);
+            if (pollTimer) clearInterval(pollTimer);
+        };
     });
 </script>
 
