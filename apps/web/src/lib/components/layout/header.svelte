@@ -174,11 +174,7 @@
                     }
                 }}
             >
-<<<<<<< Updated upstream
-                <img src={Logo} alt="damoang" class="h-12" />
-=======
                 <img src={Logo} alt="damoang" class="h-10 md:h-12" />
->>>>>>> Stashed changes
             </a>
         </div>
 
