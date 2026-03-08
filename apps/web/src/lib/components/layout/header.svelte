@@ -329,7 +329,7 @@
 <!-- 드로워 메뉴 오버레이 -->
 {#if isDrawerOpen}
     <div
-        class="bg-foreground/50 fixed inset-0 z-40 transition-opacity duration-300"
+        class="bg-foreground/50 fixed inset-0 z-[60] transition-opacity duration-300"
         onclick={toggleDrawer}
         role="button"
         tabindex="0"
@@ -339,8 +339,9 @@
 
 <!-- 드로워 메뉴 (항상 DOM에 존재, 위치만 변경) -->
 <div
-    class="bg-background fixed bottom-0 right-0 top-0 z-50 w-[85vw] max-w-80 transform shadow-lg transition-transform duration-300 ease-in-out"
-    class:translate-x-full={!isDrawerOpen}
+    class="bg-background fixed bottom-0 left-0 top-0 z-[70] w-[85vw] max-w-80 transform shadow-lg transition-transform duration-300 ease-in-out 2xl:left-auto 2xl:right-0"
+    class:-translate-x-full={!isDrawerOpen}
+    class:2xl:translate-x-full={!isDrawerOpen}
     class:translate-x-0={isDrawerOpen}
 >
     <div class="flex h-full flex-col p-6">

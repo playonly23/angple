@@ -15,7 +15,7 @@
 </script>
 
 <Card class="gap-0">
-    <CardHeader class="flex flex-row flex-nowrap items-center justify-between space-y-0 px-4 py-3">
+    <CardHeader class="flex flex-row flex-nowrap items-center justify-between space-y-0 py-3">
         <div class="flex items-center gap-2">
             <div
                 class="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/30"
@@ -34,7 +34,7 @@
         </a>
     </CardHeader>
 
-    <CardContent class="px-4">
+    <CardContent class="">
         {#if hasData}
             <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
                 {#each posts as post, index (`${post.id}-${index}`)}
