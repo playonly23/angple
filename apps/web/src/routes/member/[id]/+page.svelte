@@ -62,9 +62,7 @@
     let { data }: { data: PageData & { profile: any } } = $props();
     const p = $derived(data.profile);
 
-    const profileIconUrl = $derived(
-        getAvatarUrl(p?.mb_image) || getMemberIconUrl(p?.mb_id)
-    );
+    const profileIconUrl = $derived(getAvatarUrl(p?.mb_image) || getMemberIconUrl(p?.mb_id));
     let profileIconFailed = $state(false);
     $effect(() => {
         if (p) profileIconFailed = false;
