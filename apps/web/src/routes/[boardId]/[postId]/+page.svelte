@@ -1030,7 +1030,7 @@
     />
 {/if}
 
-<div class="mx-auto overflow-x-hidden pt-2">
+<div class="mx-auto pt-2">
     <!-- 상단 배너 -->
     {#if widgetLayoutStore.hasEnabledAds}
         <div class="mb-6">
@@ -1039,7 +1039,7 @@
     {/if}
 
     <!-- 상단 네비게이션 -->
-    <div class="-mx-1 mb-2 flex items-center gap-3 py-2">
+    <div class="-mx-5 mb-2 flex items-center gap-3 px-5 py-2 md:mx-0 md:px-0">
         <Button variant="outline" size="sm" onclick={goBack} class="shrink-0">← 목록으로</Button>
 
         <div class="flex-1"></div>
