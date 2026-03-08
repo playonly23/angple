@@ -23,7 +23,7 @@
 </script>
 
 <Card class="gap-0">
-    <CardHeader class="flex flex-row items-center justify-between space-y-0 px-4 py-3">
+    <CardHeader class="flex flex-row items-center justify-between space-y-0 py-3">
         <div class="flex items-center gap-2">
             <div
                 class="flex h-7 w-7 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30"
@@ -35,7 +35,7 @@
         <EconomyTabs bind:activeTab onTabChange={handleTabChange} />
     </CardHeader>
 
-    <CardContent class="px-4">
+    <CardContent class="">
         {#if !hasData}
             <div class="flex items-center justify-center py-8">
                 <div class="text-muted-foreground text-sm">로딩 중...</div>

@@ -109,12 +109,12 @@
 </script>
 
 <Card class="gap-0">
-    <CardHeader class="flex flex-row items-center justify-between gap-2 space-y-0 px-4 py-3">
+    <CardHeader class="flex flex-row items-center justify-between gap-2 space-y-0 py-3">
         <RecommendedHeader />
         <RecommendedTabs bind:activeTab onTabChange={handleTabChange} />
     </CardHeader>
 
-    <CardContent class="px-4">
+    <CardContent class="">
         {#if loading}
             <SkeletonLoader />
         {:else if error}

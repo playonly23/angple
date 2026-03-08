@@ -157,10 +157,10 @@
 
         <!-- 최근 글 (모바일에서 숨김) -->
         <Card class="hidden gap-0 sm:flex">
-            <CardHeader class="px-3 pb-0 pt-2">
+            <CardHeader class="pb-0 pt-2">
                 <h4 class="text-foreground text-sm font-semibold">작성자 최근 글</h4>
             </CardHeader>
-            <CardContent class="px-3 pb-2 pt-0">
+            <CardContent class="pb-2 pt-0">
                 {#if loading}
                     <div class="flex justify-center py-4">
                         <Loader2 class="text-muted-foreground h-4 w-4 animate-spin" />
@@ -186,10 +186,10 @@
 
         <!-- 최근 댓글 (모바일에서 숨김) -->
         <Card class="hidden gap-0 sm:flex">
-            <CardHeader class="px-3 pb-0 pt-2">
+            <CardHeader class="pb-0 pt-2">
                 <h4 class="text-foreground text-sm font-semibold">작성자 최근 댓글</h4>
             </CardHeader>
-            <CardContent class="px-3 pb-2 pt-0">
+            <CardContent class="pb-2 pt-0">
                 {#if loading}
                     <div class="flex justify-center py-4">
                         <Loader2 class="text-muted-foreground h-4 w-4 animate-spin" />
