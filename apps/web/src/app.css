@@ -102,9 +102,9 @@
 
     /* "오늘" 타임스탬프 */
     --date-today: var(--liked);
-    --card: oklch(0.208 0.042 265.755);
+    --card: oklch(0.231 0.006 196.75);
     --card-foreground: oklch(0.984 0.003 247.858);
-    --popover: oklch(0.208 0.042 265.755);
+    --popover: oklch(0.231 0.006 196.75);
     --popover-foreground: oklch(0.984 0.003 247.858);
     --primary: oklch(0.929 0.013 255.508);
     --primary-foreground: oklch(0.208 0.042 265.755);
@@ -248,9 +248,9 @@
     /* "오늘" 타임스탬프 */
     --date-today: var(--liked);
     --foreground: oklch(0.984 0.003 247.858);
-    --card: oklch(0.06 0.003 196.75);
+    --card: oklch(0 0 0);
     --card-foreground: oklch(0.984 0.003 247.858);
-    --popover: oklch(0.06 0.003 196.75);
+    --popover: oklch(0 0 0);
     --popover-foreground: oklch(0.984 0.003 247.858);
     --primary: oklch(0.929 0.013 255.508);
     --primary-foreground: oklch(0.208 0.042 265.755);
