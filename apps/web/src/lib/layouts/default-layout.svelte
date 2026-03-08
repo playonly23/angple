@@ -56,7 +56,9 @@
                 </aside>
             {/if}
 
-            <main class="box-content min-w-0 flex-1 px-1.5 pt-1 md:px-0 md:py-5 lg:pe-6 2xl:!px-9">
+            <main
+                class="box-content min-w-0 flex-1 px-5 pt-1 [&_[data-slot='card']]:-mx-5 md:px-0 md:py-5 md:[&_[data-slot='card']]:mx-0 lg:pe-6 2xl:!px-9"
+            >
                 {@render children()}
             </main>
             {#if snbPosition === 'right'}
@@ -87,3 +89,4 @@
     <!-- 푸터 -->
     <Footer />
 </div>
+
