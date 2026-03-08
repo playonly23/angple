@@ -174,7 +174,11 @@
                     }
                 }}
             >
+<<<<<<< Updated upstream
                 <img src={Logo} alt="damoang" class="h-12" />
+=======
+                <img src={Logo} alt="damoang" class="h-10 md:h-12" />
+>>>>>>> Stashed changes
             </a>
         </div>
 
@@ -346,9 +350,9 @@
 
 <!-- 드로워 메뉴 (항상 DOM에 존재, 위치만 변경) -->
 <div
-    class="bg-background fixed bottom-0 left-0 top-0 z-[70] w-[85vw] max-w-80 transform shadow-lg transition-transform duration-300 ease-in-out 2xl:left-auto 2xl:right-0"
+    class="bg-background fixed bottom-0 left-0 top-0 z-[70] w-[85vw] max-w-80 transform shadow-lg transition-transform duration-300 ease-in-out md:left-auto md:right-0"
     class:-translate-x-full={!isDrawerOpen}
-    class:2xl:translate-x-full={!isDrawerOpen}
+    class:md:translate-x-full={!isDrawerOpen}
     class:translate-x-0={isDrawerOpen}
 >
     <div class="flex h-full flex-col p-6">
