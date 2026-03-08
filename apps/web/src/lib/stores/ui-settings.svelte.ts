@@ -12,10 +12,12 @@ const STORAGE_KEY = 'angple_ui_settings';
 export type FontFamily = 'default' | 'pretendard' | 'nanum-gothic' | 'noto-sans';
 export type LineHeight = 'compact' | 'normal' | 'relaxed' | 'loose';
 export type ShortcutButtonSize = 'small' | 'medium' | 'large';
+export type ListViewMode = 'classic' | 'modern';
 
 interface UiSettings {
     // 레이아웃
     titleBold: boolean;
+    listView: ListViewMode;
     lineHeight: LineHeight;
     fontFamily: FontFamily;
     hideMyProfile: boolean;
@@ -40,6 +42,7 @@ interface UiSettings {
 
 const DEFAULTS: UiSettings = {
     titleBold: false,
+    listView: 'classic',
     lineHeight: 'normal',
     fontFamily: 'default',
     hideMyProfile: false,
@@ -127,6 +130,13 @@ function createUiSettingsStore() {
         },
         set titleBold(v: boolean) {
             settings.titleBold = v;
+            save();
+        },
+        get listView() {
+            return settings.listView;
+        },
+        set listView(v: ListViewMode) {
+            settings.listView = v;
             save();
         },
         get lineHeight() {

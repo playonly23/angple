@@ -107,6 +107,9 @@
 
     // 모바일 10+ 추천 시 pill 배지 스타일
     const mobileLikesPill = $derived(post.likes >= 10);
+
+    // 모던 보기: 데스크탑에서도 모바일 레이아웃 강제 적용
+    const isMobileView = $derived(uiSettingsStore.listView === 'modern');
 </script>
 
 <!-- Classic 스킨: 데스크톱 CSS Grid 5컬럼 (추천|제목|이름|날짜|조회) -->
@@ -135,10 +138,12 @@
         data-sveltekit-preload-data="hover"
     >
         <div
-            class="flex items-center gap-2 md:grid md:grid-cols-[60px_1fr_auto_auto_auto] md:items-center md:gap-0"
+            class={isMobileView
+                ? 'flex items-center gap-2'
+                : 'flex items-center gap-2 md:grid md:grid-cols-[60px_1fr_auto_auto_auto] md:items-center md:gap-0'}
         >
             <!-- 추천 박스 (col 1, 데스크톱만) — legacy: rcmd-box 40×20 rounded-lg -->
-            <div class="hidden md:flex md:items-center md:justify-center">
+            <div class={isMobileView ? 'hidden' : 'hidden md:flex md:items-center md:justify-center'}>
                 {#if post.is_notice}
                     <div
                         class="flex h-5 w-10 items-center justify-center rounded-lg"
@@ -157,11 +162,11 @@
             </div>
 
             <!-- 콘텐츠 (모바일: block, 데스크톱: contents → 그리드 col 2~5 참여) -->
-            <div class="min-w-0 flex-1 space-y-1 md:contents md:space-y-0">
+            <div class={isMobileView ? 'min-w-0 flex-1 space-y-1' : 'min-w-0 flex-1 space-y-1 md:contents md:space-y-0'}>
                 <!-- 제목 줄 (col 2) -->
                 <div class="flex min-w-0 items-center gap-1">
                     {#if post.is_notice}
-                        <span class="mobile-only" style="display:none"
+                        <span class="mobile-only" class:modern-view={isMobileView}
                             ><Pin class="text-liked h-3.5 w-3.5 shrink-0" /></span
                         >
                     {/if}
@@ -180,7 +185,7 @@
                             {post.category}
                         </span>
                     {/if}
-                    <span class="truncate {readClass}" class:font-bold={uiSettingsStore.titleBold}>
+                    <span class="truncate {readClass}" class:font-semibold={uiSettingsStore.titleBold}>
                         {post.title}
                     </span>
                     <!-- 부가 아이콘: N, 이미지, 동영상, 댓글 -->
@@ -204,7 +209,7 @@
 
                 <!-- 이름 (col 3, 데스크톱만) — legacy: 13px, 100px wide -->
                 <span
-                    class="post-meta-text hidden items-center gap-1 truncate md:inline-flex md:w-[120px] md:pl-1"
+                    class={isMobileView ? 'hidden' : 'post-meta-text hidden items-center gap-1 truncate md:inline-flex md:w-[120px] md:pl-1'}
                 >
                     {#if iconUrl}
                         <img
@@ -219,22 +224,18 @@
 
                 <!-- 날짜 (col 4, 데스크톱만) -->
                 <span
-                    class="post-meta-text hidden md:inline md:w-[70px] md:pl-1 md:text-center {isToday(
-                        post.created_at
-                    )
-                        ? 'date-today'
-                        : ''}"
+                    class={isMobileView ? 'hidden' : `post-meta-text hidden md:inline md:w-[70px] md:pl-1 md:text-center ${isToday(post.created_at) ? 'date-today' : ''}`}
                 >
                     {formatDate(post.created_at)}
                 </span>
 
                 <!-- 조회수 (col 5, 데스크톱만) -->
-                <span class="post-meta-text hidden md:inline md:w-[50px] md:pl-1 md:text-center">
+                <span class={isMobileView ? 'hidden' : 'post-meta-text hidden md:inline md:w-[50px] md:pl-1 md:text-center'}>
                     {formatCompactNumber(post.views)}
                 </span>
 
                 <!-- 모바일 메타 (Line 2: 👍likes · Author · Date · 조회) -->
-                <div class="mobile-meta" style="display:none">
+                <div class="mobile-meta" class:modern-view={isMobileView}>
                     {#if mobileLikesPill}
                         <span class="mobile-likes-pill">👍{post.likes}</span>
                     {:else}
@@ -353,6 +354,17 @@
             align-items: center;
             gap: 0.25rem;
         }
+    }
+
+    /* 모던 보기: 데스크탑에서 모바일 레이아웃 강제 적용 */
+    .mobile-only.modern-view {
+        display: inline-flex !important;
+    }
+
+    .mobile-meta.modern-view {
+        display: flex !important;
+        align-items: center;
+        gap: 0.25rem;
     }
 
     /* 모바일 메타 구분자: CSS-only (HTML에 · 없음 → FOUC 시 점 미노출) */

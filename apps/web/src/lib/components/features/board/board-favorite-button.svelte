@@ -49,9 +49,10 @@
     title={isFavorite
         ? `즐겨찾기 '${slotLabel(registeredSlot!)}' (클릭하여 해제)`
         : '이 게시판을 즐겨찾기에 등록'}
-    class="h-8 w-8 {isFavorite
+    class="relative h-8 w-8 {isFavorite
         ? 'text-yellow-500 hover:text-yellow-600'
         : 'text-muted-foreground hover:text-yellow-500'}"
 >
+    <span class="absolute -inset-2"></span>
     <Star class="h-4 w-4" fill={isFavorite ? 'currentColor' : 'none'} />
 </Button>
