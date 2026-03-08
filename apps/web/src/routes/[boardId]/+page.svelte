@@ -52,6 +52,17 @@
     import { readPostStyleStore, type ReadPostStyle } from '$lib/stores/read-post-style.svelte.js';
     import { uiSettingsStore } from '$lib/stores/ui-settings.svelte.js';
     import BoardListSkeleton from '$lib/components/features/board/board-list-skeleton.svelte';
+    import {
+        DropdownMenu,
+        DropdownMenuContent,
+        DropdownMenuTrigger,
+        DropdownMenuLabel,
+        DropdownMenuSeparator,
+        DropdownMenuRadioGroup,
+        DropdownMenuRadioItem,
+        DropdownMenuCheckboxItem
+    } from '$lib/components/ui/dropdown-menu/index.js';
+    import Settings2 from '@lucide/svelte/icons/settings-2';
 
     // 특수 게시판 컴포넌트 (플러그인 레지스트리 기반)
     import { boardTypeRegistry } from '$lib/components/features/board/board-type-registry.js';
@@ -352,9 +363,9 @@
             {/if}
 
             <!-- 헤더 -->
-            <div class="mb-4 flex items-center gap-3">
+            <div class="mb-4 flex items-center justify-between">
                 <div class="flex shrink-0 items-center gap-2">
-                    <h1 class="text-xl font-bold sm:text-3xl">
+                    <h1 class="text-2xl font-bold sm:text-3xl">
                         <a
                             href="/{boardId}"
                             class="text-foreground hover:text-primary transition-colors"
@@ -378,31 +389,85 @@
                     {/if}
                 </div>
 
-                <Button
-                    variant="outline"
-                    size="icon"
-                    class="h-9 w-9 shrink-0"
-                    onclick={() => (showSearch = !showSearch)}
-                    title="검색"
-                >
-                    <Search class="h-4 w-4" />
-                </Button>
-                {#if canWrite()}
-                    <Button onclick={goToWrite} class="shrink-0">
-                        <Pencil class="mr-2 h-4 w-4" />
-                        글쓰기
-                    </Button>
-                {:else if authStore.isAuthenticated}
-                    <!-- 로그인했지만 권한 부족 -->
+                <div class="flex items-center gap-2">
+                    {#if listLayoutId === 'classic'}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                {#snippet child({ props })}
+                                    <Button {...props} variant="outline" size="icon" class="relative h-9 w-9 shrink-0" title="보기 설정">
+                                        <span class="absolute -inset-1.5"></span>
+                                        <Settings2 class="h-4 w-4" />
+                                    </Button>
+                                {/snippet}
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" class="w-44">
+                                <!-- 화면 레이아웃 (데스크탑 전용) -->
+                                <div class="hidden md:block">
+                                    <DropdownMenuLabel class="text-xs font-semibold">화면 레이아웃</DropdownMenuLabel>
+                                    <DropdownMenuRadioGroup
+                                        value={uiSettingsStore.listView}
+                                        onValueChange={(v) => (uiSettingsStore.listView = v as 'classic' | 'modern')}
+                                    >
+                                        <DropdownMenuRadioItem value="classic">클래식</DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="modern">모던</DropdownMenuRadioItem>
+                                    </DropdownMenuRadioGroup>
+                                    <DropdownMenuSeparator />
+                                </div>
+                                <DropdownMenuLabel class="text-xs font-semibold">읽은 글 표시</DropdownMenuLabel>
+                                <DropdownMenuRadioGroup
+                                    value={readPostStyleStore.value}
+                                    onValueChange={(v) => readPostStyleStore.set(v as ReadPostStyle)}
+                                >
+                                    <DropdownMenuRadioItem value="dimmed">흐림</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="bold">굵게</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="italic">기울임</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="underline">밑줄</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="strikethrough">취소선</DropdownMenuRadioItem>
+                                </DropdownMenuRadioGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuLabel class="text-xs font-semibold">목록 밀도</DropdownMenuLabel>
+                                <DropdownMenuRadioGroup
+                                    value={densityStore.value}
+                                    onValueChange={(v) => densityStore.set(v as 'compact' | 'balanced' | 'relaxed')}
+                                >
+                                    <DropdownMenuRadioItem value="compact">촘촘</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="balanced">보통</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="relaxed">여유</DropdownMenuRadioItem>
+                                </DropdownMenuRadioGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuCheckboxItem
+                                    checked={uiSettingsStore.titleBold}
+                                    onCheckedChange={(v) => (uiSettingsStore.titleBold = v)}
+                                >글 제목 굵게 표시</DropdownMenuCheckboxItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    {/if}
                     <Button
-                        disabled
-                        class="shrink-0 cursor-not-allowed opacity-60"
-                        title={writePermissionMessage()}
+                        variant="outline"
+                        size="icon"
+                        class="relative h-9 w-9 shrink-0"
+                        onclick={() => (showSearch = !showSearch)}
+                        title="검색"
                     >
-                        <Lock class="mr-2 h-4 w-4" />
-                        글쓰기
+                        <span class="absolute -inset-1.5"></span>
+                        <Search class="h-4 w-4" />
                     </Button>
-                {/if}
+                    {#if canWrite()}
+                        <Button onclick={goToWrite} class="shrink-0">
+                            <Pencil class="mr-2 h-4 w-4" />
+                            글쓰기
+                        </Button>
+                    {:else if authStore.isAuthenticated}
+                        <Button
+                            disabled
+                            class="shrink-0 cursor-not-allowed opacity-60"
+                            title={writePermissionMessage()}
+                        >
+                            <Lock class="mr-2 h-4 w-4" />
+                            글쓰기
+                        </Button>
+                    {/if}
+                </div>
             </div>
 
             <!-- 축하 메시지 롤링 -->
@@ -520,61 +585,7 @@
 
                 <!-- 게시글 목록 -->
                 <div class={wrapperClass}>
-                    {#if listLayoutId === 'classic'}
-                        <div class="hidden justify-end px-4 pb-1 md:flex">
-                            <div class="flex items-center gap-3">
-                                <!-- 읽은 글 스타일 -->
-                                <div class="flex items-center gap-0.5">
-                                    <span class="text-muted-foreground mr-0.5 text-[10px]"
-                                        >읽은글</span
-                                    >
-                                    {#each [{ value: 'dimmed', label: '흐림' }, { value: 'bold', label: '굵게' }, { value: 'italic', label: '기울임' }, { value: 'underline', label: '밑줄' }, { value: 'strikethrough', label: '취소선' }] as opt (opt.value)}
-                                        <button
-                                            class="rounded px-1.5 py-0.5 text-[10px] transition-colors {readPostStyleStore.value ===
-                                            opt.value
-                                                ? 'bg-foreground/10 text-foreground'
-                                                : 'text-muted-foreground hover:text-foreground'}"
-                                            onclick={() =>
-                                                readPostStyleStore.set(opt.value as ReadPostStyle)}
-                                            >{opt.label}</button
-                                        >
-                                    {/each}
-                                </div>
-                                <!-- 밀도 -->
-                                <div class="flex items-center gap-0.5">
-                                    <button
-                                        class="rounded px-1.5 py-0.5 text-[10px] transition-colors {densityStore.value ===
-                                        'compact'
-                                            ? 'bg-foreground/10 text-foreground'
-                                            : 'text-muted-foreground hover:text-foreground'}"
-                                        onclick={() => densityStore.set('compact')}>촘촘</button
-                                    >
-                                    <button
-                                        class="rounded px-1.5 py-0.5 text-[10px] transition-colors {densityStore.value ===
-                                        'balanced'
-                                            ? 'bg-foreground/10 text-foreground'
-                                            : 'text-muted-foreground hover:text-foreground'}"
-                                        onclick={() => densityStore.set('balanced')}>보통</button
-                                    >
-                                    <button
-                                        class="rounded px-1.5 py-0.5 text-[10px] transition-colors {densityStore.value ===
-                                        'relaxed'
-                                            ? 'bg-foreground/10 text-foreground'
-                                            : 'text-muted-foreground hover:text-foreground'}"
-                                        onclick={() => densityStore.set('relaxed')}>여유</button
-                                    >
-                                </div>
-                                <!-- 제목 굵게 -->
-                                <button
-                                    class="rounded px-1.5 py-0.5 text-[10px] transition-colors {uiSettingsStore.titleBold
-                                        ? 'bg-foreground/10 text-foreground'
-                                        : 'text-muted-foreground hover:text-foreground'}"
-                                    onclick={() =>
-                                        (uiSettingsStore.titleBold = !uiSettingsStore.titleBold)}
-                                    >제목 굵게</button
-                                >
-                            </div>
-                        </div>
+                    {#if listLayoutId === 'classic' && uiSettingsStore.listView !== 'modern'}
                         <div
                             class="border-border bg-muted/30 text-muted-foreground hidden border-b px-4 py-1.5 text-sm font-medium md:block"
                         >

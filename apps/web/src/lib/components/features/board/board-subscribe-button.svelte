@@ -80,10 +80,11 @@
         title={isSubscribed
             ? `'${boardTitle}' 구독 중 (${subscriberCount}명) — 클릭하여 해제`
             : `'${boardTitle}' 구독하기 — 새 글 알림 받기${subscriberCount > 0 ? ` (${subscriberCount}명 구독 중)` : ''}`}
-        class="h-8 w-8 {isSubscribed
+        class="relative h-8 w-8 {isSubscribed
             ? 'text-primary hover:text-primary/80'
             : 'text-muted-foreground hover:text-primary'}"
     >
+        <span class="absolute -inset-2"></span>
         {#if isSubscribed}
             <Bell class="h-4 w-4" fill="currentColor" />
         {:else}
