@@ -47,7 +47,18 @@ const IGNORED_PATTERNS = [
     'window.bannerNight',
     'wrsParams',
     'serviceWorker.register',
-    'pubads'
+    'pubads',
+    'is not valid JSON',
+    'Unrecognized token',
+    'state_unsafe_mutation',
+    'error loading dynamically imported module',
+    'adsbygoogle.push()',
+    'JSON.parse: unexpected character',
+    '__firefox__',
+    'window.ethereum',
+    'hover` was not found',
+    'Failed to update the ServiceWorker',
+    'Failed to update a ServiceWorker'
 ];
 
 function shouldIgnore(message: string, source?: string, stack?: string): boolean {
@@ -55,7 +66,7 @@ function shouldIgnore(message: string, source?: string, stack?: string): boolean
     if (!message) return true;
     if (message === '[object Object]') return true;
     if (message === '(unknown)') return true;
-    if (message === 'Rejected') return true;
+    if (message === 'Rejected' || message === 'Error: Rejected') return true;
     if (IGNORED_PATTERNS.some((p) => message.includes(p))) return true;
 
     // 2. 소스 URL 필터

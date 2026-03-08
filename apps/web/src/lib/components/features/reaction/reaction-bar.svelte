@@ -130,19 +130,20 @@
     function handleClickOutside(event: MouseEvent): void {
         const el = event.target as HTMLElement;
         if (!el.closest('.reaction-bar-root') && !el.closest('.reaction-picker-fixed')) {
-            showPicker = false;
+            queueMicrotask(() => {
+                showPicker = false;
+            });
         }
     }
 
-    // initialReactions가 제공되면 fetch 스킵 (일괄 조회 최적화)
-    if (initialReactions) {
-        reactions = initialReactions;
-    }
+    // initialReactions 반응적 감시 (SSR 스트리밍 데이터 도착 시 자동 적용)
+    $effect(() => {
+        if (initialReactions !== undefined) {
+            reactions = initialReactions;
+        }
+    });
 
     onMount(() => {
-        if (!initialReactions) {
-            loadReactions();
-        }
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     });

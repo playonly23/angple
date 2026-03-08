@@ -153,14 +153,15 @@
     class:shadow-sm={isScrolled}
     class:border-b={isScrolled}
 >
-    <div class="container mx-auto flex h-12 items-center justify-between md:h-16">
+    <div class="container mx-auto flex h-12 items-center justify-between !px-2.5 md:h-16 md:!px-6">
         <!-- 햄버거 메뉴 + 로고 -->
         <div class="flex items-center">
             <button
                 onclick={toggleDrawer}
-                class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out md:hidden"
+                class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out md:hidden"
                 aria-label="메뉴"
             >
+                <span class="absolute -inset-1"></span>
                 <AlignJustify class="text-muted-foreground h-5 w-5" />
             </button>
             <a
@@ -228,7 +229,7 @@
             <!-- 테마 모드 토글: light → dark → amoled -->
             <button
                 onclick={cycleThemeMode}
-                class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out"
                 aria-label={themeMode === 'light'
                     ? '다크모드로 전환'
                     : themeMode === 'dark'
@@ -240,6 +241,7 @@
                       ? 'AMOLED'
                       : '라이트모드'}
             >
+                <span class="absolute -inset-1"></span>
                 {#if themeMode === 'amoled'}
                     <Sun class="h-5 w-5 text-orange-400" />
                 {:else if themeMode === 'dark'}
@@ -252,9 +254,10 @@
             <!-- 검색 아이콘 -->
             <button
                 onclick={() => goto('/search')}
-                class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out"
                 aria-label="검색"
             >
+                <span class="absolute -inset-1"></span>
                 <Search class="text-muted-foreground h-5 w-5" />
             </button>
 
@@ -292,9 +295,10 @@
             {:else}
                 <button
                     onclick={() => goto('/login')}
-                    class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                    class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out"
                     aria-label="로그인"
                 >
+                    <span class="absolute -inset-1"></span>
                     <User class="text-primary h-5 w-5" />
                 </button>
             {/if}
@@ -303,9 +307,10 @@
                 <!-- 쪽지 아이콘 -->
                 <button
                     onclick={() => goto('/messages')}
-                    class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                    class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out"
                     aria-label="쪽지"
                 >
+                    <span class="absolute -inset-1"></span>
                     <Mail class="text-muted-foreground h-5 w-5" />
                 </button>
 
@@ -314,9 +319,10 @@
             {:else}
                 <!-- 알림 아이콘 (비로그인 시 단순 버튼) -->
                 <button
-                    class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                    class="hover:bg-accent relative rounded-lg p-2 transition-all duration-200 ease-out"
                     aria-label="알림"
                 >
+                    <span class="absolute -inset-1"></span>
                     <Bell class="text-muted-foreground h-5 w-5" />
                 </button>
             {/if}
