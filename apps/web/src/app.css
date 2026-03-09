@@ -352,26 +352,7 @@
     }
 }
 
-/* View Transitions API — 부드러운 페이지 전환 애니메이션 */
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-}
-
-@keyframes fade-out {
-    to {
-        opacity: 0;
-    }
-}
-
-::view-transition-old(root) {
-    animation: 90ms fade-out ease-out;
-}
-
-::view-transition-new(root) {
-    animation: 210ms fade-in ease-in;
-}
+/* View Transitions API — 비활성화됨 (SPA 네비게이션 깜빡임/쪼그라듦 유발) */
 
 /* 네비게이션 프로그레스바 */
 @keyframes nav-progress {
