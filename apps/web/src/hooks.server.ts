@@ -567,7 +567,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         );
         response.headers.set('Vary', 'Cookie');
     } else {
-        response.headers.set('Cache-Control', 'private, no-store, no-cache, must-revalidate');
+        response.headers.set('Cache-Control', 'private, max-age=2, must-revalidate');
         response.headers.set('Vary', 'Cookie');
     }
 
