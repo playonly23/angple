@@ -1067,7 +1067,7 @@
     />
 {/if}
 
-<div class="mx-auto overflow-x-hidden pt-2">
+<div class="mx-auto pt-2">
     <!-- 상단 배너 (슬롯 기반) -->
     {#if widgetLayoutStore.hasEnabledAds}
         <div class="mb-6">
@@ -1385,17 +1385,15 @@
 
 <!-- 게시판 최근글 목록 -->
 {#if canRead}
-    <div class="bg-card mx-auto mt-3 rounded-xl px-3 py-3 md:mt-4 md:px-5">
-        <RecentPosts
-            {boardId}
-            {boardTitle}
-            currentPostId={data.post.id}
-            limit={25}
-            initialPage={Number($page.url.searchParams.get('page')) || 1}
-            promotionPosts={promotionPosts as any[]}
-            displaySettings={data.board?.display_settings}
-        />
-    </div>
+    <RecentPosts
+        {boardId}
+        {boardTitle}
+        currentPostId={data.post.id}
+        limit={25}
+        initialPage={Number($page.url.searchParams.get('page')) || 1}
+        promotionPosts={promotionPosts as any[]}
+        displaySettings={data.board?.display_settings}
+    />
 {/if}
 
 <!-- 추천자 목록 다이얼로그 -->
