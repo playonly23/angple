@@ -397,21 +397,21 @@
     class:md:translate-x-full={!isDrawerOpen}
     class:translate-x-0={isDrawerOpen}
 >
-    <div class="flex h-full min-w-0 flex-col p-6">
-        <div class="mb-8 flex shrink-0 items-center justify-between">
-            <h2 class="text-foreground text-xl font-bold">추가 메뉴</h2>
+    <div class="flex h-full min-w-0 flex-col px-3 py-2">
+        <div class="mb-1 flex shrink-0 items-center justify-between">
+            <h2 class="text-foreground text-base font-bold">추가 메뉴</h2>
             <button
                 onclick={toggleDrawer}
-                class="hover:bg-accent rounded-lg p-2 transition-all duration-200 ease-out"
+                class="hover:bg-accent rounded-lg p-1 transition-all duration-200 ease-out"
                 aria-label="메뉴 닫기"
             >
-                <X class="text-muted-foreground h-6 w-6" />
+                <X class="text-muted-foreground h-5 w-5" />
             </button>
         </div>
 
         <!-- 사이드바 메뉴 -->
         <div class="min-h-0 flex-1 overflow-y-auto">
-            <Sidebar />
+            <Sidebar compact />
         </div>
     </div>
 </div>
